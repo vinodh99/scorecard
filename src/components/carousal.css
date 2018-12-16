@@ -1,0 +1,16 @@
+.ant-carousel .slick-slide {
+    text-align: center;
+    height: 500px;
+    line-height: 200px;
+    background: #8d9cb8;
+    overflow: hidden;
+  }
+  
+    .ant-carousel .slick-slide input {
+    width: 5%;
+    background: #8d9cb8;
+
+  }
+  /* .ant-carousel .slick-slide h3 {
+    color: #fff;
+  } */
