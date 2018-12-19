@@ -15,27 +15,31 @@ class carousel extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            coi: '',
-            rpy: '',
+            coi: 0,
+            rpy: 0,
             fpy: 0,
-            gtm: '',
-            gql: '',
-            ghc1: '',
-            ghc2: '',
-            gfx: '',
+            gtm: 0,
+            gql: 0,
+            ghc1: 0,
+            ghc2: 0,
+            gfx: 0,
             rpm: 0,
-            ias: '',
-            ish: '',
-            das: '',
-            ds: '',
-            aar: '',
+            ias: 0,
+            ish: 0,
+            das: 0,
+            ds: 0,
+            aar: 0,
 
         }
     }
 
 
     handleMessageInput = (e) => {
+        this.GTM()
         this.GQL()
+        this.GHC1()
+        this.GHC2()
+        this.GFX()
         this.setState({
             [e.target.name]: e.target.value
         });
@@ -45,11 +49,13 @@ class carousel extends Component {
 
     GTM = () => {
         // let gtm=parse
-        let gtm = this.state.rpy * (115 / 110);
-        // this.setState({
-        //     gtm: gtm
-        // })
-        return gtm;
+        if (this.state.rpy !== 0) {
+            let gtm = this.state.rpy * (115 / 110);
+            this.setState({
+                gtm: gtm
+            })
+            // return gtm;
+        }
     }
     GQL = () => {
         if (this.state.fpy !== 0 && this.state.rpm !== 0) {
@@ -67,30 +73,39 @@ class carousel extends Component {
         }
     }
     GHC1 = () => {
-        let ghc1 = this.state.ias * this.state.ish * 0.16;
-        // this.setState({
-        //     ghc1: ghc1
-        // })
-        return ghc1;
+        if (this.state.ias !== 0 && this.state.ish !== 0) {
+            let ghc1 = this.state.ias * this.state.ish * 0.16;
+            this.setState({
+                ghc1: ghc1
+            })
+            return ghc1;
+        }
     }
     GHC2 = () => {
-        let ghc2 = this.state.das * this.state.ds * 0.18;
-        // this.setState({
-        //     ghc2: ghc2
-        // })
-        return ghc2
+        if (this.state.das !== 0 && this.state.ds !== 0) {
+            let ghc2 = this.state.das * this.state.ds * 0.18;
+            this.setState({
+                ghc2: ghc2
+            })
+            // return ghc2
+        }
     }
 
     GFX = () => {
-        let gfx = this.state.aar * 0.036;
-        // this.setState({
-        //     gfx: gfx
-        // })
-        return gfx
+        if (this.state.aar !== 0) {
 
+            let gfx = this.state.aar * 0.036;
+            this.setState({
+                gfx: gfx
+            })
+            return gfx
+
+
+        }
     }
-    ROI = (gtm, gql, ghc1, ghc2, gfx) => {
-        return (((gtm + gql + ghc1 + ghc2 + gfx) - this.state.inputValue) / this.state.inputValue) * 100;
+    ROI = () => {
+        if (this.state.gtm !== 0 && this.state.gql !== 0 && this.state.ghc1 !== 0 && this.state.ghc2 !== 0 && this.state.gfx !== 0)
+            return (((this.state.gtm + this.state.gql + this.state.ghc1 + this.state.ghc2 + this.state.gfx) - this.state.coi) / this.state.coi) * 100;
     }
 
     onChange = (e, name) => {
@@ -113,7 +128,6 @@ class carousel extends Component {
 
             <Carousel >
                 <div>
-
                     <FormItem>
                         <h1>
                             GTM = <Input
@@ -159,7 +173,7 @@ class carousel extends Component {
                             value={this.state.ish}
                             onChange={this.handleMessageInput}
                             placeholder="DEV staff"
-                        /> X 0.16 = $ {this.GHC1()}
+                        /> X 0.16 = $ {this.state.ghc1}
                     </h1>
                     <h1>
                         GHC(Developers)= <Input
@@ -174,7 +188,7 @@ class carousel extends Component {
                             value={this.state.ds}
                             onChange={this.handleMessageInput}
                             placeholder="DEV staff"
-                        /> X 0.18 = $ {this.GHC2()}
+                        /> X 0.18 = $ {this.state.ghc2}
                     </h1>
                 </div>
                 <div>
@@ -182,10 +196,10 @@ class carousel extends Component {
                         GFX = <Input
                             name="aar"
                             type="number"
-                            value={this.state.gtm}
+                            value={this.state.aar}
                             onChange={this.handleMessageInput}
                             placeholder='revenue per year'
-                        /> X 0.036 = $ {this.GFX()}
+                        /> X 0.036 = $ {this.state.gfx}
                     </h1>
                 </div>
                 <div className='div'>
@@ -196,7 +210,7 @@ class carousel extends Component {
                         </h1>
                         </Col>
                         <Col span={8} className="col2">
-                            <Row span={12}>
+                            <Row>
                                 <h2>
                                     (Total Gains[A]-Cost of investment) X 100
                                 </h2>
@@ -207,7 +221,7 @@ class carousel extends Component {
 
                             </Row>
                             <Row span={12}>
-                                = {this.ROI(this.state.gtm, this.state.gql, this.state.ghc1, this.state.ghc2, this.state.gfx)}
+                                {this.ROI()}
                             </Row>
 
                         </Col>
@@ -215,8 +229,8 @@ class carousel extends Component {
                             <div>
                                 Cost Of Investment<Slider
                                     className="slider"
-                                    min={1}
-                                    max={100}
+                                    min={-1000}
+                                    max={1000}
                                     onChange={e => this.onChange(e, "coi")}
                                     name="coi"
                                     value={typeof coi === 'number' ? coi : 0}
@@ -224,8 +238,8 @@ class carousel extends Component {
                                 />
                                 GTM<Slider
                                     className="slider"
-                                    min={1}
-                                    max={100}
+                                    min={-1000}
+                                    max={1000}
                                     onChange={e => this.onChange(e, "gtm")}
                                     name='gtm'
                                     value={typeof gtm === 'number' ? gtm : 0}
@@ -233,8 +247,8 @@ class carousel extends Component {
                                 />
                                 GQL<Slider
                                     className="slider"
-                                    min={1}
-                                    max={100}
+                                    min={-1000}
+                                    max={1000}
                                     onChange={e => this.onChange(e, "gql")}
                                     name='gql'
                                     value={typeof gql === 'number' ? gql : 0}
@@ -242,8 +256,8 @@ class carousel extends Component {
                                 />
                                 GHC (Developers)<Slider
                                     className="slider"
-                                    min={1}
-                                    max={100}
+                                    min={-1000}
+                                    max={1000}
                                     onChange={e => this.onChange(e, "ghc1")}
                                     name='ghc1'
                                     value={typeof ghc1 === 'number' ? ghc1 : 0}
@@ -251,8 +265,8 @@ class carousel extends Component {
                                 />
                                 GHC (IT ops)<Slider
                                     className="slider"
-                                    min={1}
-                                    max={100}
+                                    min={-1000}
+                                    max={1000}
                                     onChange={e => this.onChange(e, "ghc2")}
                                     name='ghc2'
                                     value={typeof ghc2 === 'number' ? ghc2 : 0}
@@ -260,8 +274,8 @@ class carousel extends Component {
                                 />
                                 GFX <Slider
                                     className="slider"
-                                    min={1}
-                                    max={100}
+                                    min={-1000}
+                                    max={1000}
                                     onChange={e => this.onChange(e, "gfx")}
                                     name='gfx'
                                     value={typeof gfx === 'number' ? gfx : 0}
