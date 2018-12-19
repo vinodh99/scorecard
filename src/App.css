@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
 .App {
   text-align: center;
 }
@@ -33,4 +34,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+.image{
+  background-image: url("https://wallpaper.wiki/wp-content/uploads/2017/05/wallpaper.wiki-HD-Desktop-Plain-Images-PIC-WPE007976.jpg") !important;
+
 }
