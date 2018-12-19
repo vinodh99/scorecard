@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import './scorecard.css';
 import { Layout, Menu, Icon, Row, Col, Dropdown } from 'antd';
+import Cards from './cards';
+
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
+
 
 class DashBoard extends Component {
 
@@ -87,7 +90,7 @@ class DashBoard extends Component {
                             <Col span={12}>
                                 <Dropdown overlay={data} trigger={['click']}>
                                     <h1 className="ant-dropdown-link" style={{ paddingRight: 40, fontWeight: 'bold', color: '#0066c', fontFamily: 'Cochin', textAlign: 'right' }}>
-                                        <Icon type="setting" />
+                                        <Icon className="custom-icon" type="setting" />
                                     </h1>
                                 </Dropdown>
 
@@ -96,7 +99,8 @@ class DashBoard extends Component {
                         </Row>
 
                     </Header>
-                    <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 580 }}>
+                    <Content style={{ alignItems: 'center', margin: '24px 16px', padding: 24, background: '#fff', minHeight: 580 }}>
+                        <Cards {...this.props} />
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>
                     </Footer>

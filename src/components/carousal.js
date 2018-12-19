@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import 'antd/dist/antd.css';
 import './carousal.css';
 import { Carousel, Input } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';

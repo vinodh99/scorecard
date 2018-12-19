@@ -18,6 +18,10 @@
   color: white;
 }
 
+.custom-icon{
+  font-size: 35px !important;
+}
+
 .App-link {
   color: #61dafb;
 }
