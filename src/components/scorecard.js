@@ -85,7 +85,7 @@ class DashBoard extends Component {
                                 <h1 style={{ fontWeight: 'bold', color: '#0066c', fontFamily: 'Cochin', textAlign: 'right' }}>SCORECARD</h1>
                             </Col>
                             <Col span={12}>
-                                <Dropdown overlay={data} trigger={['hover']}>
+                                <Dropdown overlay={data} trigger={['click']}>
                                     <h1 className="ant-dropdown-link" style={{ paddingRight: 40, fontWeight: 'bold', color: '#0066c', fontFamily: 'Cochin', textAlign: 'right' }}>
                                         <Icon type="setting" />
                                     </h1>
