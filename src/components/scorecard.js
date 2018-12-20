@@ -84,18 +84,18 @@ class DashBoard extends Component {
                     </Sider>
                     <Layout>
                         <Header style={{ background: '#fff', padding: 0 }} >
-                            <Row>
+                            <Row >
                                 <Col span={12}>
                                     <h1 style={{ fontWeight: 'bold', color: '#0066c', fontFamily: 'Cochin', textAlign: 'right' }}>SCORECARD</h1>
                                 </Col>
-                                <Col span={12}>
+                                {/* <Col span={12}>
                                     <Dropdown overlay={data} trigger={['click']}>
                                         <h1 className="ant-dropdown-link" style={{ paddingRight: 40, fontWeight: 'bold', color: '#0066c', fontFamily: 'Cochin', textAlign: 'right' }}>
                                             <Icon className="custom-icon" type="setting" />
                                         </h1>
                                     </Dropdown>
 
-                                </Col>
+                                </Col> */}
 
                             </Row>
 
@@ -107,7 +107,7 @@ class DashBoard extends Component {
                         </Footer>
                     </Layout>
                 </Layout >
-            </div>
+            </div >
         );
     }
 }

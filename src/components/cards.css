@@ -1,5 +1,30 @@
 
-h1, h2, p{
+h1, h2, h3, h5, p, FormItem{
     font-family: 'Josefin Sans', cursive;
     font: 100
 }
+h4{
+    font-family: 'Josefin Sans', cursive;
+font-weight: bold
+}
+.row { 
+        padding-Bottom: 10; 
+        padding-Top: 10;
+        padding-Left: 15; 
+        padding-Right: 10 ;
+
+    }
+ 
+Input.placeholder{
+    text-align: 'center';
+    
+}
+/* .card
+    { background: '#7D6DFB';
+      text-Align: 'center';
+        height: 250; 
+        border-radius: 50 
+    } */
+
+
+

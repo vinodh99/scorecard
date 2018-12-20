@@ -1,92 +1,444 @@
 import React, { Component } from 'react';
-import { Card, Row, Col } from 'antd';
+import { Card, Row, Col, Slider, InputNumber, Form, Input, Tooltip, Icon, Popover } from 'antd';
 import './cards.css'
 import './carousal.css'
 const { Meta } = Card;
+const FormItem = Form.Item;
 
 class Cards extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
+            visible: false,
+            min: '28.3',
+            rie: '115/100',
             coi: 0,
-            rpy: 0,
-            fpy: 0,
-            gtm: 0,
-            gql: 0,
-            ghc1: 0,
-            ghc2: 0,
-            gfx: 0,
-            rpm: 0,
-            ias: 0,
-            ish: 0,
-            das: 0,
+            rpy: '',
+            fpy: '',
+            gtm: '0.0',
+            gql: '0.0',
+            ghc1: '0.0',
+            ghc2: '0.0',
+            gfx: '0.0',
+            rpm: '',
+            ias: '',
+            ish: '',
+            das: '',
             ds: 0,
-            aar: 0,
+            aar: '',
+            roi: '0.0',
+            por: '0.036',
+            hpw: '0.16',
+            tpr: '0.18',
 
         }
     }
+    handleVisibleChange = (visible) => {
+        this.setState({ visible });
+    }
+    handleMessageInput = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+        this.GTM()
+        this.GQL()
+        this.GHC1()
+        this.GHC2()
+        this.GFX()
 
+        // console.log("xyz"+this.state.firstName)
+    }
+
+
+    GTM = () => {
+        // let gtm=parse
+        if (this.state.rpy !== 0) {
+            let gtm = this.state.rpy * (115 / 110);
+            this.setState({
+                gtm: gtm.toFixed(2)
+            })
+            this.ROI();
+
+            // return gtm;
+        }
+    }
+    GQL = () => {
+        if (this.state.fpy !== 0 && this.state.rpm !== 0) {
+            let gql = this.state.fpy * (28.3) * this.state.rpm;
+            console.log(gql)
+            this.setState({
+                gql: gql.toFixed(2)
+            })
+            this.ROI();
+
+            // return gql;
+        }
+        // else {
+        //     this.setState({
+        //         gql: 0
+        //     })
+        // }
+    }
+    GHC1 = () => {
+        if (this.state.ias !== 0 && this.state.ish !== 0) {
+            let ghc1 = this.state.ias * this.state.ish * 0.16;
+            this.setState({
+                ghc1: ghc1.toFixed(2)
+            })
+            // return ghc1;
+            this.ROI();
+        }
+    }
+    GHC2 = () => {
+        if (this.state.das !== 0 && this.state.ds !== 0) {
+            let ghc2 = this.state.das * this.state.ds * 0.18;
+            this.setState({
+                ghc2: ghc2.toFixed(2)
+            })
+            this.ROI();
+
+            // return ghc2
+        }
+    }
+
+    GFX = () => {
+        if (this.state.aar !== 0) {
+
+            let gfx = this.state.aar * 0.036;
+            this.setState({
+                gfx: gfx.toFixed(2)
+            })
+            this.ROI();
+
+            // return gfx
+
+
+        }
+    }
+    ROI = () => {
+        // let gtm = parseInt(this.state.gtm);
+        // let gql = parseInt(this.state.gql);
+        // let ghc1 = parseInt(this.state.ghc1);
+        // let ghc2 = parseInt(this.state.ghc2);
+        // let gfx = parseInt(this.state.gfx);
+        if (this.state.gtm !== 0 && this.state.gql !== 0 && this.state.ghc1 !== 0 && this.state.ghc2 !== 0 && this.state.gfx !== 0) {
+            // if (gtm !== 0 && gql !== 0 && ghc1 !== 0 && ghc2 !== 0 && gfx !== 0) {
+            const roi = (((this.state.gtm + this.state.gql + this.state.ghc1 + this.state.ghc2 + this.state.gfx) - this.state.coi) / this.state.coi) * 100;
+            // let roi = (((gtm + gql + ghc1 + ghc2 + gfx) - coi) / coi) * 100;
+
+            this.setState({
+                roi: roi.toFixed(2)
+            })
+        }
+    }
+
+    onChange = (e, name) => {
+        this.setState({
+            [name]: e
+        });
+    }
+    // onChangenum = value => {
+    //     this.setState({
+    //         inputValue: value
+    //     });
+    // };
 
     render() {
+        const { getFieldDecorator } = this.props.form;
+        const formItemLayout = {
+            // labelCol: {
+            //     xs: { span: 24 },
+            //     sm: { span: 8 },
+            // },
+            // wrapperCol: {
+            //     xs: { span: 24 },
+            //     sm: { span: 4 },
+            // },
+        };
+        const { rpy } = this.state;
+        const { coi } = this.state;
+        const { gtm } = this.state;
+        const { gql } = this.state;
+        const { ghc1 } = this.state;
+        const { ghc2 } = this.state;
+        const { gfx } = this.state;
+        const { roi } = this.state;
 
         return (
-            <div style={{ background: '#ECECEC', height: 620 }} >
-                <Row>
+            <div style={{ background: '#ECECEC', height: 750 }} >
+                <Row gutter={5}>
                     <Col span={20}>
-                        <Row gutter={16} style={{ paddingBottom: 10, paddingTop: 10, paddingLeft: 10 }}>
+                        <Row className="row" gutter={5} style={{ paddingBottom: 5, paddingTop: 10, paddingLeft: 15 }}>
                             <Col span={12}>
-                                <Card className='card' style={{ background: '#7D6DFB', textAlign: 'center', height: 200 }} bordered={false}>
+                                <Card className='card' style={{ background: '#BCC0C2', textAlign: 'center', height: 237 }} bordered={false}>
                                     <p >
-                                        Revenue gains from accelerated time to market of new functionality (GTM)
+                                        Revenue gains from accelerated time to market of new functionality <br />(GTM)
                                     </p>
                                     <h1>
-                                        GTM:
+                                        GTM: {this.state.gtm}
                                     </h1>
-                                </Card>
-                            </Col>
-                            <Col span={12}>
-                                <Card style={{ background: '#35D385', textAlign: 'center', height: 200 }} bordered={false} >
-                                    <p>Gains from cost reduction of application failures resulting from increased quality (GQL)</p>
-                                    <h1>GQL:</h1>
-                                </Card>
-                            </Col>
+                                    <Row>
+                                        <Col span={12} style={{ alignItems: 'center' }}>
+                                            <p>Revenue Per Year <br />
 
+                                                {/* <Col span={6} offset={9} > */}
+                                                <Input
+                                                    name="rpy"
+                                                    type="number"
+                                                    className="rpy-input"
+                                                    value={this.state.rpy}
+                                                    onChange={this.handleMessageInput}
+                                                    placeholder="rpy"
+                                                    size="small"
+
+                                                />
+                                                {/* </Col> */}
+                                            </p>
+                                        </Col>
+                                        <Col span={12}>
+                                            <p>Revenue Increase Estimate
+                                            <Popover
+                                                    content={<a onClick={this.hide}>(It is set to 115/110 by default)</a>}
+                                                    title="Set the value of Revenue Increase Estimate"
+                                                    trigger="click"
+                                                    visible={this.state.visible}
+                                                    onVisibleChange={this.handleVisibleChange}
+                                                >
+                                                    <Icon type="question-circle-o" />
+                                                </Popover><br /><span style={{ fontWeight: 'bold' }}>{this.state.rie}</span></p>
+                                        </Col>
+                                    </Row>
+                                </Card>
+
+                            </Col>
+                            <Col span={12} >
+                                <Card style={{ background: /*'#33CCF4'*/'#BCC0C2', textAlign: 'center', height: 237 }} bordered={false}>
+                                    <p>Gain from flexibility in the IT environment <br />(GFX)</p>
+                                    <h1>GFX: {this.state.gfx}</h1>
+                                    <Row>
+                                        <Col span={12} style={{ alignItems: 'center' }}>
+                                            <p>Application Annual Revenue <br />
+
+                                                {/* <Col span={6} offset={9} > */}
+                                                <Input
+                                                    name="aar"
+                                                    type="number"
+                                                    className="aar-input"
+                                                    value={this.state.aar}
+                                                    onChange={this.handleMessageInput}
+                                                    placeholder="aar"
+                                                    size="small"
+                                                // defaultValue='0.0'
+
+                                                />
+                                                {/* </Col> */}
+                                            </p>
+                                        </Col>
+                                        <Col span={12}>
+                                            <p>72% Avg TCO reduction x5% cost of IT as percentage of revenue<br /><span style={{ fontWeight: 'bold' }}>{this.state.por}</span></p>
+                                        </Col>
+                                    </Row>
+                                </Card>
+                            </Col>
                         </Row>
-                        <Row gutter={16} style={{ paddingLeft: 10 }}>
+                        <Row className="row" gutter={5} style={{ paddingLeft: 15 }}>
                             <Col span={12}>
-                                <Card style={{ background: '#FECA4F', textAlign: 'center', height: 200 }} bordered={false}>
+                                <Card style={{ background: '#BCC0C2' /*'#FECA4F'*/, textAlign: 'center', height: 320 }} bordered={false}>
                                     <p>
                                         Gains from enhanced IT team productivity and cost reduction of IT headcount waste (GHC)
                                     </p>
-                                    <h2>
-                                        GHC (IT Ops):
-                                    </h2>
-                                    <h2>
-                                        GHC (Developers):
-                                    </h2>
+                                    <h4>
+                                        GHC (IT Ops): {this.state.ghc1}
+                                    </h4>
+                                    <Row gutter={10}>
+                                        <Col span={8} style={{ alignItems: 'center' }}>
+                                            <p>IT average salary<br />
+                                                {/* <Col span={8} offset={7} style={{ alignItems: 'center' }}> */}
+                                                <Input
+                                                    name="ias"
+                                                    className="ias-input"
+                                                    type="number"
+                                                    value={this.state.ias}
+                                                    onChange={this.handleMessageInput}
+                                                    placeholder='ias'
+                                                    size="small"
+                                                />
+                                            </p>
+                                            {/* </Col> */}
+                                        </Col>
+                                        <Col span={8}>
+                                            <p>7.2/45 saving hours per week/total hours <br /><span style={{ fontWeight: 'bold' }}>{this.state.hpw}</span></p>
+                                        </Col>
+                                        <Col span={8}>
+                                            <p>IT staff headcount<br />
+                                                {/* <Col span={8} offset={7} style={{ alignItems: 'center' }}> */}
+                                                <Input
+                                                    className='aar-input'
+                                                    name="ish"
+                                                    type="number"
+                                                    value={this.state.ish}
+                                                    onChange={this.handleMessageInput}
+                                                    placeholder='ish'
+                                                    size="small"
+                                                />
+                                            </p>
+                                            {/* </Col> */}
+                                        </Col>
+                                    </Row>
+                                    <h4>
+                                        GHC (Developers): {this.state.ghc2}
+                                    </h4>
+                                    <Row gutter={10}>
+                                        <Col span={8} style={{ alignItems: 'center' }}>
+                                            <p>Developer average salary<br />
+                                                {/* <Col span={8} offset={7} style={{ alignItems: 'center' }}> */}
+                                                <Input
+                                                    name="das"
+                                                    type="number"
+                                                    value={this.state.das}
+                                                    onChange={this.handleMessageInput}
+                                                    placeholder="das"
+                                                    className="aar-input"
+                                                    size="small"
+                                                /></p>
+                                            {/* </Col> */}
+                                        </Col>
+                                        <Col span={8}>
+                                            <p>Average Minutes to recover difference <br /><span style={{ fontWeight: 'bold' }}>{this.state.min} minutes</span></p>
+                                        </Col>
+                                        <Col span={8}>
+                                            <p>60% TRICD x75% TSRCA x40% TDSPR<br /><span style={{ fontWeight: 'bold' }}>{this.state.tpr} minutes</span></p>
+                                        </Col>
+                                    </Row>
                                 </Card>
                             </Col>
                             <Col span={12}>
-                                <Card style={{ background: '#33CCF4', textAlign: 'center', height: 200 }} bordered={false}>
-                                    <p>Gain from flexibility in the IT environment (GFX)</p>
-                                    <h1>GFX:</h1>
+                                <Card style={{ background: /*'#35D385'*/'#BCC0C2', textAlign: 'center', height: 320 }} bordered={false} >
+                                    <p>Gains from cost reduction of application failures resulting from increased quality (GQL)</p>
+                                    <h1>GQL: {this.state.gql}</h1>
+                                    <Row gutter={10}>
+                                        <Col span={8} style={{ alignItems: 'center' }}>
+                                            <p>Failures Per Year<br />
+                                                {/* <Col span={10} offset={7} style={{ alignItems: 'center' }}> */}
+                                                <Input
+                                                    className='aar-input'
+                                                    name="fpy"
+                                                    type="number"
+                                                    value={this.state.fpy}
+                                                    onChange={this.handleMessageInput}
+                                                    // defaultValue='0.0'
+                                                    size="small"
+                                                    placeholder='fpy'
+                                                /></p>
+                                            {/* </Col> */}
+                                        </Col>
+                                        <Col span={8}>
+                                            <p>Average Minutes to recover difference <br /><span style={{ fontWeight: 'bold' }}>{this.state.min} minutes</span></p>
+                                        </Col>
+                                        <Col span={8}>
+                                            <p>Revenue per minute
+                                            {/* <Col span={10} offset={7} style={{ textAlign: 'center' }}> */}
+                                                {/* <Row> */}
+                                                <Input
+                                                    className='aar-input'
+                                                    name="rpm"
+                                                    type="number"
+                                                    value={this.state.rpm}
+                                                    onChange={this.handleMessageInput}
+                                                    // defaultValue='0.0'
+                                                    size="small"
+                                                    placeholder='rpm'
+                                                /> <br />Minutes</p>
+                                            {/* </Row> */}
+                                            {/* <Row> */}
+                                            {/* </Row> */}
+                                            {/* </Col> */}
+                                        </Col>
+                                    </Row>
                                 </Card>
+
                             </Col>
                         </Row>
-                        <Row gutter={16} style={{ paddingTop: 10, paddingLeft: 10 }}>
+                        <Row className="row" gutter={5} style={{ paddingTop: 5, paddingLeft: 15 }}>
                             <Col>
-                                <Card style={{ background: '#87460a', textAlign: 'center', height: 180, justifyContent: 'center' }} bordered={false}>
+                                <Card className="card22" style={{ background: '#535353a', textAlign: 'center', height: 180, justifyContent: 'center', borderRadius: 10, height: '300' }} bordered={false}>
+                                    {/* <div> */}
                                     <p>
                                         Return Of Investment
-                                </p>
-                                    <h1>ROI:</h1>
+                                    </p>
+                                    <h1>ROI: {this.state.roi}</h1>
+                                    {/* </div> */}
+                                    {/* <div> */}
+                                    <Row >
+                                        <Col span={12}>
+                                            <p>Cost Of Investment:</p> <Slider
+                                                className="slider"
+                                                min={-1000}
+                                                max={1000}
+                                                onChange={e => this.onChange(e, "coi")}
+                                                name="coi"
+                                                value={typeof coi === 'number' ? coi : 0}
+                                                step={0.01}
+                                            />
+                                            <p>GTM</p><Slider
+                                                className="slider"
+                                                min={-1000}
+                                                max={1000}
+                                                onChange={e => this.onChange(e, "gtm")}
+                                                name='gtm'
+                                                value={typeof gtm === 'number' ? gtm : 0}
+                                                step={0.01}
+                                            />
+                                            <p>GQL</p><Slider
+                                                className="slider"
+                                                min={-1000}
+                                                max={1000}
+                                                onChange={e => this.onChange(e, "gql")}
+                                                name='gql'
+                                                value={typeof gql === 'number' ? gql : 0}
+                                                step={0.01}
+                                            />
+                                        </Col >
+                                        <Col span={12}>
+                                            <p>GHC (Developers)</p><Slider
+                                                className="slider"
+                                                min={-1000}
+                                                max={1000}
+                                                onChange={e => this.onChange(e, "ghc1")}
+                                                name='ghc1'
+                                                value={typeof ghc1 === 'number' ? ghc1 : 0}
+                                                step={0.01}
+                                            />
+                                            <p>GHC (IT ops)</p><Slider
+                                                className="slider"
+                                                min={-1000}
+                                                max={1000}
+                                                onChange={e => this.onChange(e, "ghc2")}
+                                                name='ghc2'
+                                                value={typeof ghc2 === 'number' ? ghc2 : 0}
+                                                step={0.01}
+                                            />
+                                            <p>GFX</p> <Slider
+                                                className="slider"
+                                                min={-1000}
+                                                max={1000}
+                                                onChange={e => this.onChange(e, "gfx")}
+                                                name='gfx'
+                                                value={typeof gfx === 'number' ? gfx : 0}
+                                                step={0.01}
+                                            />
+                                        </Col>
+                                    </Row>
+                                    {/* </div> */}
                                 </Card>
                             </Col>
+
+
                         </Row>
                     </Col>
-                    <Col Span={4} offset={20} style={{ textAlign: 'center', paddingBottom: 10, paddingTop: 10, paddingLeft: 10, paddingRight: 10 }}>
-                        <Card hoverable style={{ background: '#4286f4', textAlign: 'center', height: 600, align: 'middle' }} bordered={false} >
+                    <Col Span={4} offset={20} style={{ textAlign: 'center', paddingBottom: 10, paddingTop: 10, paddingLeft: 5, paddingRight: 10 }}>
+                        <Card hoverable style={{ background: '#323232', textAlign: 'center', height: 885, align: 'middle' }} bordered={false} >
 
                             <h1>state</h1>
                         </Card>
@@ -97,5 +449,6 @@ class Cards extends Component {
         );
     }
 }
+const wrappedCards = Form.create()(Cards)
 
-export default Cards;
+export default wrappedCards;

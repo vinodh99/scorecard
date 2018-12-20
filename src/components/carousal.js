@@ -3,7 +3,7 @@ import './carousal.css';
 import { Carousel, Input } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
 import MathQuill, { addStyles as addMathquillStyles } from 'react-mathquill';
-import { Col, Row, Slider, Switch } from 'antd';
+import { Col, Row, Slider, Switch, InputNumber, } from 'antd';
 
 
 // function onChange(a, b, c) {
@@ -111,182 +111,186 @@ class carousel extends Component {
         this.setState({
             [name]: e
         });
-    }
-    render() {
-        const { coi } = this.state;
-        const { gtm } = this.state;
-        const { gql } = this.state;
-        const { ghc1 } = this.state;
-        const { ghc2 } = this.state;
-        const { gfx } = this.state;
+        onChange = (value) => {
+            if (Number.isNaN(value)) {
+                return;
+            }
+        }
+        render() {
+            const { coi } = this.state;
+            const { gtm } = this.state;
+            const { gql } = this.state;
+            const { ghc1 } = this.state;
+            const { ghc2 } = this.state;
+            const { gfx } = this.state;
 
 
 
 
-        return (
+            return (
 
-            <Carousel >
-                <div>
-                    <FormItem>
+                <Carousel >
+                    <div>
+                        <FormItem>
+                            <h1>
+                                GTM = <Input
+                                    name="rpy"
+                                    type="number"
+                                    value={this.state.rpy}
+                                    onChange={this.handleMessageInput}
+                                    placeholder="revenue per year"
+                                /> X 115/110 = $ {this.state.gtm}
+                            </h1>
+                        </FormItem>
+
+                    </div>
+                    <div>
                         <h1>
-                            GTM = <Input
-                                name="rpy"
+                            GQL = <Input
+                                name="fpy"
                                 type="number"
-                                value={this.state.rpy}
+                                value={this.state.fpy}
+                                onChange={this.handleMessageInput}
+                                placeholder='failures per year'
+                            />X 28.3 minutes X $ <Input
+                                name="rpm"
+                                type="number"
+                                value={this.state.rpm}
+                                onChange={this.handleMessageInput}
+                                placeholder="Revenue per minute"
+                            /> = $ {this.state.gql}
+                        </h1>
+
+                    </div>
+                    <div>
+                        <h1>
+                            GHC(IT Ops)= <Input
+                                name="ias"
+                                type="number"
+                                value={this.state.ias}
+                                onChange={this.handleMessageInput}
+                                placeholder='IT AVG salary'
+                            />X <Input
+                                name="ish"
+                                type="number"
+                                value={this.state.ish}
+                                onChange={this.handleMessageInput}
+                                placeholder="DEV staff"
+                            /> X 0.16 = $ {this.state.ghc1}
+                        </h1>
+                        <h1>
+                            GHC(Developers)= <Input
+                                name="das"
+                                type="number"
+                                value={this.state.das}
+                                onChange={this.handleMessageInput}
+                                placeholder='Developer AVG salary'
+                            />X <Input
+                                name="ds"
+                                type="number"
+                                value={this.state.ds}
+                                onChange={this.handleMessageInput}
+                                placeholder="DEV staff"
+                            /> X 0.18 = $ {this.state.ghc2}
+                        </h1>
+                    </div>
+                    <div>
+                        <h1>
+                            GFX = <Input
+                                name="aar"
+                                type="number"
+                                value={this.state.aar}
                                 onChange={this.handleMessageInput}
                                 placeholder='revenue per year'
-                            /> X 115/110 = $ {this.state.gtm}
+                            /> X 0.036 = $ {this.state.gfx}
                         </h1>
-                    </FormItem>
-
-                </div>
-                <div>
-                    <h1>
-                        GQL = <Input
-                            name="fpy"
-                            type="number"
-                            value={this.state.fpy}
-                            onChange={this.handleMessageInput}
-                            placeholder='failures per year'
-                        />X 28.3 minutes X $ <Input
-                            name="rpm"
-                            type="number"
-                            value={this.state.rpm}
-                            onChange={this.handleMessageInput}
-                            placeholder="Revenue per minute"
-                        /> = $ {this.state.gql}
-                    </h1>
-
-                </div>
-                <div>
-                    <h1>
-                        GHC(IT Ops)= <Input
-                            name="ias"
-                            type="number"
-                            value={this.state.ias}
-                            onChange={this.handleMessageInput}
-                            placeholder='IT AVG salary'
-                        />X <Input
-                            name="ish"
-                            type="number"
-                            value={this.state.ish}
-                            onChange={this.handleMessageInput}
-                            placeholder="DEV staff"
-                        /> X 0.16 = $ {this.state.ghc1}
-                    </h1>
-                    <h1>
-                        GHC(Developers)= <Input
-                            name="das"
-                            type="number"
-                            value={this.state.das}
-                            onChange={this.handleMessageInput}
-                            placeholder='Developer AVG salary'
-                        />X <Input
-                            name="ds"
-                            type="number"
-                            value={this.state.ds}
-                            onChange={this.handleMessageInput}
-                            placeholder="DEV staff"
-                        /> X 0.18 = $ {this.state.ghc2}
-                    </h1>
-                </div>
-                <div>
-                    <h1>
-                        GFX = <Input
-                            name="aar"
-                            type="number"
-                            value={this.state.aar}
-                            onChange={this.handleMessageInput}
-                            placeholder='revenue per year'
-                        /> X 0.036 = $ {this.state.gfx}
-                    </h1>
-                </div>
-                <div className='div'>
-                    <Row>
-                        <Col span={8} className="col1">
-                            <h1>
-                                ROI =
+                    </div>
+                    <div className='div'>
+                        <Row>
+                            <Col span={8} className="col1">
+                                <h1>
+                                    ROI =
                         </h1>
-                        </Col>
-                        <Col span={8} className="col2">
-                            <Row>
-                                <h2>
-                                    (Total Gains[A]-Cost of investment) X 100
+                            </Col>
+                            <Col span={8} className="col2">
+                                <Row>
+                                    <h2>
+                                        (Total Gains[A]-Cost of investment) X 100
                                 </h2>
-                                <hr />
-                                <h2>
-                                    Cost of investment
+                                    <hr />
+                                    <h2>
+                                        Cost of investment
                                 </h2>
 
-                            </Row>
-                            <Row span={12}>
-                                {this.ROI()}
-                            </Row>
+                                </Row>
+                                <Row span={12}>
+                                    {this.ROI()}
+                                </Row>
 
-                        </Col>
-                        <Col span={8}>
-                            <div>
-                                Cost Of Investment<Slider
-                                    className="slider"
-                                    min={-1000}
-                                    max={1000}
-                                    onChange={e => this.onChange(e, "coi")}
-                                    name="coi"
-                                    value={typeof coi === 'number' ? coi : 0}
-                                    step={0.01}
-                                />
-                                GTM<Slider
-                                    className="slider"
-                                    min={-1000}
-                                    max={1000}
-                                    onChange={e => this.onChange(e, "gtm")}
-                                    name='gtm'
-                                    value={typeof gtm === 'number' ? gtm : 0}
-                                    step={0.01}
-                                />
-                                GQL<Slider
-                                    className="slider"
-                                    min={-1000}
-                                    max={1000}
-                                    onChange={e => this.onChange(e, "gql")}
-                                    name='gql'
-                                    value={typeof gql === 'number' ? gql : 0}
-                                    step={0.01}
-                                />
-                                GHC (Developers)<Slider
-                                    className="slider"
-                                    min={-1000}
-                                    max={1000}
-                                    onChange={e => this.onChange(e, "ghc1")}
-                                    name='ghc1'
-                                    value={typeof ghc1 === 'number' ? ghc1 : 0}
-                                    step={0.01}
-                                />
-                                GHC (IT ops)<Slider
-                                    className="slider"
-                                    min={-1000}
-                                    max={1000}
-                                    onChange={e => this.onChange(e, "ghc2")}
-                                    name='ghc2'
-                                    value={typeof ghc2 === 'number' ? ghc2 : 0}
-                                    step={0.01}
-                                />
-                                GFX <Slider
-                                    className="slider"
-                                    min={-1000}
-                                    max={1000}
-                                    onChange={e => this.onChange(e, "gfx")}
-                                    name='gfx'
-                                    value={typeof gfx === 'number' ? gfx : 0}
-                                    step={0.01}
-                                />
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-            </Carousel >
-        );
+                            </Col>
+                            <Col span={8}>
+                                <div>
+                                    Cost Of Investment: <Slider
+                                        className="slider"
+                                        min={-1000}
+                                        max={1000}
+                                        onChange={e => this.onChange(e, "coi")}
+                                        name="coi"
+                                        value={typeof coi === 'number' ? coi : 0}
+                                        step={0.01}
+                                    />
+                                    GTM<Slider
+                                        className="slider"
+                                        min={-1000}
+                                        max={1000}
+                                        onChange={e => this.onChange(e, "gtm")}
+                                        name='gtm'
+                                        value={typeof gtm === 'number' ? gtm : 0}
+                                        step={0.01}
+                                    />
+                                    GQL<Slider
+                                        className="slider"
+                                        min={-1000}
+                                        max={1000}
+                                        onChange={e => this.onChange(e, "gql")}
+                                        name='gql'
+                                        value={typeof gql === 'number' ? gql : 0}
+                                        step={0.01}
+                                    />
+                                    GHC (Developers)<Slider
+                                        className="slider"
+                                        min={-1000}
+                                        max={1000}
+                                        onChange={e => this.onChange(e, "ghc1")}
+                                        name='ghc1'
+                                        value={typeof ghc1 === 'number' ? ghc1 : 0}
+                                        step={0.01}
+                                    />
+                                    GHC (IT ops)<Slider
+                                        className="slider"
+                                        min={-1000}
+                                        max={1000}
+                                        onChange={e => this.onChange(e, "ghc2")}
+                                        name='ghc2'
+                                        value={typeof ghc2 === 'number' ? ghc2 : 0}
+                                        step={0.01}
+                                    />
+                                    GFX <Slider
+                                        className="slider"
+                                        min={-1000}
+                                        max={1000}
+                                        onChange={e => this.onChange(e, "gfx")}
+                                        name='gfx'
+                                        value={typeof gfx === 'number' ? gfx : 0}
+                                        step={0.01}
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>
+                </Carousel >
+            );
+        }
     }
-}
 
-export default carousel;
+    export default carousel;
