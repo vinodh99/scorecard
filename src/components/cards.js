@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Card, Row, Col, Slider, InputNumber, Form, Input, Tooltip, Icon, Popover } from 'antd';
-import './cards.css'
-import './carousal.css'
+import './cards.css';
+import './carousal.css';
+import { updateroi } from '../actions/updateroi';
+import { connect } from 'react-redux';
+
 const { Meta } = Card;
 const FormItem = Form.Item;
 
@@ -11,31 +14,33 @@ class Cards extends Component {
         super(props)
         this.state = {
             visible: false,
-            min: '28.3',
-            rie: '115/100',
+            min: 28.3,
+            rie: 115 / 100,
             coi: 0,
-            rpy: '',
-            fpy: '',
-            gtm: '0.0',
-            gql: '0.0',
-            ghc1: '0.0',
-            ghc2: '0.0',
-            gfx: '0.0',
-            rpm: '',
-            ias: '',
-            ish: '',
-            das: '',
-            ds: 0,
-            aar: '',
-            roi: '0.0',
-            por: '0.036',
-            hpw: '0.16',
-            tpr: '0.18',
+            rpy: 0,
+            fpy: 0.0,
+            gtm: 0,
+            gql: 0.0,
+            ghc1: 0,
+            ghc2: 0,
+            gfx: 0,
+            rpm: 0,
+            ias: 0,
+            ish: 0,
+            das: 0,
+            ds: 0.18,
+            aar: 0,
+            roi: 0,
+            por: 0.036,
+            hpw: 0.16,
+            tpr: 0.18,
 
         }
     }
     handleVisibleChange = (visible) => {
-        this.setState({ visible });
+        this.setState({
+            visible
+        });
     }
     handleMessageInput = (e) => {
         this.setState({
@@ -46,8 +51,6 @@ class Cards extends Component {
         this.GHC1()
         this.GHC2()
         this.GFX()
-
-        // console.log("xyz"+this.state.firstName)
     }
 
 
@@ -56,50 +59,41 @@ class Cards extends Component {
         if (this.state.rpy !== 0) {
             let gtm = this.state.rpy * (115 / 110);
             this.setState({
-                gtm: gtm.toFixed(2)
+                gtm: gtm
             })
-            this.ROI();
-
+            this.props.dispatch(updateroi(this.state.gtm, this.state.gfx, this.state.ghc1, this.state.ghc2, this.state.gql, this.state.coi))
             // return gtm;
         }
+
     }
     GQL = () => {
         if (this.state.fpy !== 0 && this.state.rpm !== 0) {
             let gql = this.state.fpy * (28.3) * this.state.rpm;
-            console.log(gql)
             this.setState({
-                gql: gql.toFixed(2)
+                gql: gql
             })
-            this.ROI();
-
-            // return gql;
+            this.props.dispatch(updateroi(this.state.gtm, this.state.gfx, this.state.ghc1, this.state.ghc2, this.state.gql, this.state.coi))
         }
-        // else {
-        //     this.setState({
-        //         gql: 0
-        //     })
-        // }
     }
     GHC1 = () => {
         if (this.state.ias !== 0 && this.state.ish !== 0) {
             let ghc1 = this.state.ias * this.state.ish * 0.16;
             this.setState({
-                ghc1: ghc1.toFixed(2)
+                ghc1: ghc1
             })
-            // return ghc1;
-            this.ROI();
+            this.props.dispatch(updateroi(this.state.gtm, this.state.gfx, this.state.ghc1, this.state.ghc2, this.state.gql, this.state.coi))
         }
+
     }
     GHC2 = () => {
         if (this.state.das !== 0 && this.state.ds !== 0) {
-            let ghc2 = this.state.das * this.state.ds * 0.18;
+            let ghc2 = this.state.das * this.state.min * 0.18;
             this.setState({
-                ghc2: ghc2.toFixed(2)
+                ghc2: ghc2
             })
-            this.ROI();
-
             // return ghc2
         }
+
     }
 
     GFX = () => {
@@ -107,54 +101,41 @@ class Cards extends Component {
 
             let gfx = this.state.aar * 0.036;
             this.setState({
-                gfx: gfx.toFixed(2)
+                gfx: gfx
             })
-            this.ROI();
-
-            // return gfx
-
-
+            this.props.dispatch(updateroi(this.state.gtm, this.state.gfx, this.state.ghc1, this.state.ghc2, this.state.gql, this.state.coi))
         }
-    }
-    ROI = () => {
-        // let gtm = parseInt(this.state.gtm);
-        // let gql = parseInt(this.state.gql);
-        // let ghc1 = parseInt(this.state.ghc1);
-        // let ghc2 = parseInt(this.state.ghc2);
-        // let gfx = parseInt(this.state.gfx);
-        if (this.state.gtm !== 0 && this.state.gql !== 0 && this.state.ghc1 !== 0 && this.state.ghc2 !== 0 && this.state.gfx !== 0) {
-            // if (gtm !== 0 && gql !== 0 && ghc1 !== 0 && ghc2 !== 0 && gfx !== 0) {
-            const roi = (((this.state.gtm + this.state.gql + this.state.ghc1 + this.state.ghc2 + this.state.gfx) - this.state.coi) / this.state.coi) * 100;
-            // let roi = (((gtm + gql + ghc1 + ghc2 + gfx) - coi) / coi) * 100;
 
-            this.setState({
-                roi: roi.toFixed(2)
-            })
-        }
     }
-
     onChange = (e, name) => {
         this.setState({
             [name]: e
         });
+        this.props.dispatch(updateroi(this.state.gtm, this.state.gfx, this.state.ghc1, this.state.ghc2, this.state.gql, this.state.coi))
     }
-    // onChangenum = value => {
-    //     this.setState({
-    //         inputValue: value
-    //     });
-    // };
 
+
+    tooltipDisplay = (def) => {
+        return (
+            <Tooltip placement="topLeft" title={def} >
+                <Icon type="exclamation-circle" />
+            </Tooltip>
+        )
+    }
+
+    tooltip = (def) => {
+        switch (def) {
+            case 'tricd':
+                return this.tooltipDisplay('Time reduction by implementing continuous delivery');
+            case 'tsrca':
+                return this.tooltipDisplay('Time spent on root cause analysis');
+            case 'tdspr':
+                return this.tooltipDisplay('Time developers spend on problem resolution');
+        }
+    }
     render() {
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
-            // labelCol: {
-            //     xs: { span: 24 },
-            //     sm: { span: 8 },
-            // },
-            // wrapperCol: {
-            //     xs: { span: 24 },
-            //     sm: { span: 4 },
-            // },
         };
         const { rpy } = this.state;
         const { coi } = this.state;
@@ -163,64 +144,72 @@ class Cards extends Component {
         const { ghc1 } = this.state;
         const { ghc2 } = this.state;
         const { gfx } = this.state;
-        const { roi } = this.state;
 
         return (
             <div style={{ background: '#ECECEC', height: 750 }} >
-                <Row gutter={5}>
-                    <Col span={20}>
-                        <Row className="row" gutter={5} style={{ paddingBottom: 5, paddingTop: 10, paddingLeft: 15 }}>
-                            <Col span={12}>
-                                <Card className='card' style={{ background: '#BCC0C2', textAlign: 'center', height: 237 }} bordered={false}>
-                                    <p >
-                                        Revenue gains from accelerated time to market of new functionality <br />(GTM)
-                                    </p>
-                                    <h1>
-                                        GTM: {this.state.gtm}
+                <Row gutter={5} >
+                    <Col span={
+                        20
+                    } >
+                        <Row className="row"
+                            gutter={5}
+                            style={{ paddingBottom: 5, paddingTop: 10, paddingLeft: 15 }} >
+                            <Col span={12} >
+                                <Card className='card'
+                                    style={{ background: '#BCC0C2', textAlign: 'center', height: 237 }}
+                                    bordered={false} >
+                                    <p>
+                                        Revenue gains from accelerated time to market of new functionality <br /> (GTM) </p>
+                                    <h1 >
+                                        GTM: {
+                                            this.state.gtm.toFixed(2)
+                                        }
                                     </h1>
-                                    <Row>
-                                        <Col span={12} style={{ alignItems: 'center' }}>
-                                            <p>Revenue Per Year <br />
+                                    <Row >
+                                        <Col span={
+                                            12
+                                        }
+                                            style={
+                                                {
+                                                    alignItems: 'center'
+                                                }
+                                            } >
+                                            <p > Revenue Per Year < br />
 
-                                                {/* <Col span={6} offset={9} > */}
-                                                <Input
-                                                    name="rpy"
+                                                { /* <Col span={6} offset={9} > */}
+                                                <Input name="rpy"
                                                     type="number"
                                                     className="rpy-input"
                                                     value={this.state.rpy}
                                                     onChange={this.handleMessageInput}
                                                     placeholder="rpy"
                                                     size="small"
-
                                                 />
-                                                {/* </Col> */}
+                                                { /* </Col> */}
                                             </p>
-                                        </Col>
-                                        <Col span={12}>
-                                            <p>Revenue Increase Estimate
-                                            <Popover
-                                                    content={<a onClick={this.hide}>(It is set to 115/110 by default)</a>}
+                                        </Col >
+                                        <Col span={
+                                            12
+                                        } >
+                                            <p> Revenue Increase Estimate
+                        <Popover content={<a onClick={this.hide} > (It is set to 115 / 110 bydefault) </a>}
                                                     title="Set the value of Revenue Increase Estimate"
                                                     trigger="click"
                                                     visible={this.state.visible}
-                                                    onVisibleChange={this.handleVisibleChange}
-                                                >
+                                                    onVisibleChange={this.handleVisibleChange} >
                                                     <Icon type="question-circle-o" />
-                                                </Popover><br /><span style={{ fontWeight: 'bold' }}>{this.state.rie}</span></p>
-                                        </Col>
-                                    </Row>
-                                </Card>
-
+                                                </Popover><br /> < span style={{ fontWeight: 'bold' }} > {this.state.rie} </span></p >
+                                        </Col> </Row > </Card>
                             </Col>
                             <Col span={12} >
-                                <Card style={{ background: /*'#33CCF4'*/'#BCC0C2', textAlign: 'center', height: 237 }} bordered={false}>
-                                    <p>Gain from flexibility in the IT environment <br />(GFX)</p>
-                                    <h1>GFX: {this.state.gfx}</h1>
-                                    <Row>
-                                        <Col span={12} style={{ alignItems: 'center' }}>
-                                            <p>Application Annual Revenue <br />
-
-                                                {/* <Col span={6} offset={9} > */}
+                                <Card style={{ background: /*'#33CCF4'*/ '#BCC0C2', textAlign: 'center', height: 237 }}
+                                    bordered={false} >
+                                    <p > Gain from flexibility in the IT environment <br /> (GFX) </p>
+                                    <h1 > GFX: {this.state.gfx.toFixed(2)} </h1>
+                                    <Row >
+                                        <Col span={12}
+                                            style={{ alignItems: 'center' }} >
+                                            <p> Application Annual Revenue <br />
                                                 <Input
                                                     name="aar"
                                                     type="number"
@@ -229,32 +218,53 @@ class Cards extends Component {
                                                     onChange={this.handleMessageInput}
                                                     placeholder="aar"
                                                     size="small"
-                                                // defaultValue='0.0'
-
                                                 />
-                                                {/* </Col> */}
                                             </p>
+                                        </Col >
+                                        <Col span={12} >
+                                            <p> 72 % Avg TCO reduction x5 % cost of IT as percentage of revenue <br /> < span style={{ fontWeight: 'bold' }} > {this.state.por} </span></p>
                                         </Col>
-                                        <Col span={12}>
-                                            <p>72% Avg TCO reduction x5% cost of IT as percentage of revenue<br /><span style={{ fontWeight: 'bold' }}>{this.state.por}</span></p>
-                                        </Col>
-                                    </Row>
+                                    </Row >
                                 </Card>
-                            </Col>
+                            </Col >
                         </Row>
-                        <Row className="row" gutter={5} style={{ paddingLeft: 15 }}>
-                            <Col span={12}>
-                                <Card style={{ background: '#BCC0C2' /*'#FECA4F'*/, textAlign: 'center', height: 320 }} bordered={false}>
-                                    <p>
-                                        Gains from enhanced IT team productivity and cost reduction of IT headcount waste (GHC)
-                                    </p>
-                                    <h4>
-                                        GHC (IT Ops): {this.state.ghc1}
+                        <Row className="row"
+                            gutter={
+                                5
+                            }
+                            style={
+                                {
+                                    paddingLeft: 15
+                                }
+                            } >
+                            <Col span={12} >
+                                <Card style={
+                                    {
+                                        background: '#BCC0C2' /*'#FECA4F'*/,
+                                        textAlign: 'center',
+                                        height: 320
+                                    }
+                                }
+                                    bordered={
+                                        false
+                                    }>
+                                    <p >
+                                        Gains from enhanced IT team productivity and cost reduction of IT headcount waste(GHC) </p>
+                                    <h4 >
+                                        GHC(IT Ops): {
+                                            this.state.ghc1
+                                        }
                                     </h4>
-                                    <Row gutter={10}>
-                                        <Col span={8} style={{ alignItems: 'center' }}>
-                                            <p>IT average salary<br />
-                                                {/* <Col span={8} offset={7} style={{ alignItems: 'center' }}> */}
+                                    <Row gutter={
+                                        10
+                                    } >
+                                        <Col span={8}
+                                            style={
+                                                {
+                                                    alignItems: 'center'
+                                                }
+                                            } >
+                                            <p> IT average salary <br /> { /* <Col span={8} offset={7} style={{ alignItems: 'center' }}> */}
                                                 <Input
                                                     name="ias"
                                                     className="ias-input"
@@ -262,19 +272,15 @@ class Cards extends Component {
                                                     value={this.state.ias}
                                                     onChange={this.handleMessageInput}
                                                     placeholder='ias'
-                                                    size="small"
-                                                />
+                                                    size="small" />
                                             </p>
-                                            {/* </Col> */}
                                         </Col>
-                                        <Col span={8}>
-                                            <p>7.2/45 saving hours per week/total hours <br /><span style={{ fontWeight: 'bold' }}>{this.state.hpw}</span></p>
+                                        <Col span={8} >
+                                            <p > 7.2 / 45 saving hours per week / total hours <br /> < span style={{ fontWeight: 'bold' }} > {this.state.hpw} </span></p >
                                         </Col>
-                                        <Col span={8}>
-                                            <p>IT staff headcount<br />
-                                                {/* <Col span={8} offset={7} style={{ alignItems: 'center' }}> */}
-                                                <Input
-                                                    className='aar-input'
+                                        <Col span={8} >
+                                            <p > IT staff headcount <br />
+                                                <Input className='aar-input'
                                                     name="ish"
                                                     type="number"
                                                     value={this.state.ish}
@@ -283,16 +289,15 @@ class Cards extends Component {
                                                     size="small"
                                                 />
                                             </p>
-                                            {/* </Col> */}
                                         </Col>
-                                    </Row>
-                                    <h4>
-                                        GHC (Developers): {this.state.ghc2}
-                                    </h4>
-                                    <Row gutter={10}>
-                                        <Col span={8} style={{ alignItems: 'center' }}>
-                                            <p>Developer average salary<br />
-                                                {/* <Col span={8} offset={7} style={{ alignItems: 'center' }}> */}
+                                    </Row >
+                                    <h4 >
+                                        GHC(Developers): {
+                                            this.state.ghc2
+                                        } </h4> <Row gutter={10} >
+                                        <Col span={8}
+                                            style={{ alignItems: 'center' }} >
+                                            <p > Developer average salary <br />
                                                 <Input
                                                     name="das"
                                                     type="number"
@@ -300,99 +305,136 @@ class Cards extends Component {
                                                     onChange={this.handleMessageInput}
                                                     placeholder="das"
                                                     className="aar-input"
-                                                    size="small"
-                                                /></p>
-                                            {/* </Col> */}
+                                                    size="small" />
+                                            </p>
                                         </Col>
-                                        <Col span={8}>
-                                            <p>Average Minutes to recover difference <br /><span style={{ fontWeight: 'bold' }}>{this.state.min} minutes</span></p>
+                                        <Col span={8} >
+                                            <p > Average Minutes to recover difference < br /> < span style={{ fontWeight: 'bold' }} > {this.state.min} minutes </span></p >
                                         </Col>
-                                        <Col span={8}>
-                                            <p>60% TRICD x75% TSRCA x40% TDSPR<br /><span style={{ fontWeight: 'bold' }}>{this.state.tpr} minutes</span></p>
+                                        <Col span={8} >
+                                            <p > 60 % TRICD {
+                                                this.tooltip('tricd')
+                                            }
+                                                x75 % TSRCA {this.tooltip('tsrca')}
+                                                x40 % TDSPR {this.tooltip('tdspr')} <br /> < span style={{ fontWeight: 'bold' }} > {this.state.tpr} minutes </span></p >
                                         </Col>
-                                    </Row>
+                                    </Row >
                                 </Card>
-                            </Col>
-                            <Col span={12}>
-                                <Card style={{ background: /*'#35D385'*/'#BCC0C2', textAlign: 'center', height: 320 }} bordered={false} >
-                                    <p>Gains from cost reduction of application failures resulting from increased quality (GQL)</p>
-                                    <h1>GQL: {this.state.gql}</h1>
-                                    <Row gutter={10}>
-                                        <Col span={8} style={{ alignItems: 'center' }}>
-                                            <p>Failures Per Year<br />
-                                                {/* <Col span={10} offset={7} style={{ alignItems: 'center' }}> */}
+                            </Col >
+                            <Col span={12} >
+                                <Card style={{
+                                    background: /*'#35D385'*/ '#BCC0C2',
+                                    textAlign: 'center',
+                                    height: 320
+                                }
+                                }
+                                    bordered={
+                                        false
+                                    } >
+                                    <p > Gains from cost reduction of application failures resulting from increased quality(GQL) </p>
+                                    <h1> GQL: {this.state.gql.toFixed(2)}
+                                    </h1>
+                                    <Row gutter={10} >
+                                        <Col span={8}
+                                            style={
+                                                {
+                                                    alignItems: 'center'
+                                                }
+                                            } >
+                                            <p > Failures Per Year <br />
                                                 <Input
                                                     className='aar-input'
                                                     name="fpy"
                                                     type="number"
                                                     value={this.state.fpy}
                                                     onChange={this.handleMessageInput}
-                                                    // defaultValue='0.0'
                                                     size="small"
-                                                    placeholder='fpy'
-                                                /></p>
-                                            {/* </Col> */}
+                                                    placeholder='fpy' />
+                                            </p>
                                         </Col>
-                                        <Col span={8}>
-                                            <p>Average Minutes to recover difference <br /><span style={{ fontWeight: 'bold' }}>{this.state.min} minutes</span></p>
+                                        <Col span={8} >
+                                            <p > Average Minutes to recover difference <br /> < span style={
+                                                {
+                                                    fontWeight: 'bold'
+                                                }
+                                            } > {
+                                                    this.state.min
+                                                }
+                                                minutes </span></p >
                                         </Col>
-                                        <Col span={8}>
-                                            <p>Revenue per minute
-                                            {/* <Col span={10} offset={7} style={{ textAlign: 'center' }}> */}
-                                                {/* <Row> */}
+                                        <Col span={8}
+                                            style={
+                                                {
+                                                    textAlign: 'center'
+                                                }
+                                            } >
+                                            <p > Revenue per minute <br /> { /* <Col span={10} offset={7} style={{ textAlign: 'center' }}> */} { /* <Row> */}
                                                 <Input
                                                     className='aar-input'
                                                     name="rpm"
                                                     type="number"
                                                     value={this.state.rpm}
                                                     onChange={this.handleMessageInput}
-                                                    // defaultValue='0.0'
                                                     size="small"
-                                                    placeholder='rpm'
-                                                /> <br />Minutes</p>
-                                            {/* </Row> */}
-                                            {/* <Row> */}
-                                            {/* </Row> */}
-                                            {/* </Col> */}
-                                        </Col>
+                                                    placeholder='rpm' />
+                                                <br /> Minutes </p>
+                                        </Col >
                                     </Row>
-                                </Card>
-
+                                </Card >
                             </Col>
-                        </Row>
-                        <Row className="row" gutter={5} style={{ paddingTop: 5, paddingLeft: 15 }}>
-                            <Col>
-                                <Card className="card22" style={{ background: '#535353a', textAlign: 'center', height: 180, justifyContent: 'center', borderRadius: 10, height: '300' }} bordered={false}>
-                                    {/* <div> */}
-                                    <p>
+                        </Row >
+                        <Row className="row" gutter={5}
+                            style={
+                                {
+                                    paddingTop: 5,
+                                    paddingLeft: 15
+                                }
+                            } >
+                            <Col >
+                                <Card className="card22"
+                                    style={{
+                                        background: '#535353a',
+                                        textAlign: 'center',
+                                        height: 180,
+                                        justifyContent: 'center',
+                                        borderRadius: 10,
+                                        height: '300'
+                                    }
+                                    }
+                                    bordered={
+                                        false
+                                    } > { /* <div> */}
+                                    <p >
                                         Return Of Investment
                                     </p>
-                                    <h1>ROI: {this.state.roi}</h1>
-                                    {/* </div> */}
-                                    {/* <div> */}
+                                    <h1 > ROI: {
+                                        this.props.roi.toFixed(2)
+                                    } </h1>
                                     <Row >
-                                        <Col span={12}>
-                                            <p>Cost Of Investment:</p> <Slider
+                                        <Col span={12} >
+                                            <p > Cost Of Investment: </p>
+                                            <Slider
                                                 className="slider"
-                                                min={-1000}
+                                                min={1}
                                                 max={1000}
                                                 onChange={e => this.onChange(e, "coi")}
                                                 name="coi"
                                                 value={typeof coi === 'number' ? coi : 0}
                                                 step={0.01}
                                             />
-                                            <p>GTM</p><Slider
+                                            <p > GTM </p><Slider
                                                 className="slider"
-                                                min={-1000}
+                                                min={1}
                                                 max={1000}
                                                 onChange={e => this.onChange(e, "gtm")}
                                                 name='gtm'
-                                                value={typeof gtm === 'number' ? gtm : 0}
+                                                value={typeof gtm === 'number' ? gtm : 0
+                                                }
                                                 step={0.01}
                                             />
-                                            <p>GQL</p><Slider
+                                            <p > GQL </p><Slider
                                                 className="slider"
-                                                min={-1000}
+                                                min={1}
                                                 max={1000}
                                                 onChange={e => this.onChange(e, "gql")}
                                                 name='gql'
@@ -400,55 +442,79 @@ class Cards extends Component {
                                                 step={0.01}
                                             />
                                         </Col >
-                                        <Col span={12}>
-                                            <p>GHC (Developers)</p><Slider
+                                        <Col span={12} >
+                                            < p > GHC(Developers) </p><Slider
                                                 className="slider"
-                                                min={-1000}
+                                                min={1}
                                                 max={1000}
                                                 onChange={e => this.onChange(e, "ghc1")}
                                                 name='ghc1'
                                                 value={typeof ghc1 === 'number' ? ghc1 : 0}
                                                 step={0.01}
                                             />
-                                            <p>GHC (IT ops)</p><Slider
+                                            <p > GHC(IT ops) </p>
+                                            <Slider
                                                 className="slider"
-                                                min={-1000}
+                                                min={1}
                                                 max={1000}
                                                 onChange={e => this.onChange(e, "ghc2")}
                                                 name='ghc2'
                                                 value={typeof ghc2 === 'number' ? ghc2 : 0}
                                                 step={0.01}
                                             />
-                                            <p>GFX</p> <Slider
+                                            <p > GFX </p> <Slider
                                                 className="slider"
-                                                min={-1000}
+                                                min={1}
                                                 max={1000}
                                                 onChange={e => this.onChange(e, "gfx")}
                                                 name='gfx'
                                                 value={typeof gfx === 'number' ? gfx : 0}
                                                 step={0.01}
                                             />
-                                        </Col>
+                                        </Col >
                                     </Row>
-                                    {/* </div> */}
                                 </Card>
-                            </Col>
-
-
+                            </Col >
                         </Row>
-                    </Col>
-                    <Col Span={4} offset={20} style={{ textAlign: 'center', paddingBottom: 10, paddingTop: 10, paddingLeft: 5, paddingRight: 10 }}>
-                        <Card hoverable style={{ background: '#323232', textAlign: 'center', height: 885, align: 'middle' }} bordered={false} >
+                    </Col > <Col Span={4}
+                        offset={20}
+                        style={{
+                            textAlign: 'center',
+                            paddingBottom: 10,
+                            paddingTop: 10,
+                            paddingLeft: 5,
+                            paddingRight: 10
+                        }
+                        } >
+                        <Card hoverable style={
+                            {
+                                background: 'grey',
+                                textAlign: 'center',
+                                height: 885,
+                                align: 'middle',
+                                borderRadius: '10px'
+                            }
+                        }
+                            bordered={
+                                false
+                            } >
 
-                            <h1>state</h1>
-                        </Card>
+                            <h1 > state </h1>
+                        </Card >
                     </Col>
-                </Row>
-
+                </Row >
             </div >
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    console.log('hello ' + JSON.stringify(state))
+    return {
+        roi: state.updatedRoi.roi,
+        roiValues: state.calcValues
+    }
+}
 const wrappedCards = Form.create()(Cards)
 
-export default wrappedCards;
+export default connect(mapStateToProps)(wrappedCards);

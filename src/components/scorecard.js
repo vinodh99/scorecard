@@ -35,7 +35,7 @@ class DashBoard extends Component {
         return (
             <div >
                 <Layout style={{ minHeight: '100vh' }}>
-                    <Sider>
+                    {/* <Sider>
                         <Menu defaultSelectedKeys={['1']} mode="inline">
                             <img src="https://rsrit.com/wp-content/uploads/2017/12/logo_dark.png" alt="image" width="200px" height="70px"></img>
 
@@ -81,21 +81,21 @@ class DashBoard extends Component {
                                 <Menu.Item key="1"  >App. Annual Revenue</Menu.Item>
                             </SubMenu>
                         </Menu>
-                    </Sider>
+                    </Sider> */}
                     <Layout>
-                        <Header style={{ background: '#fff', padding: 0 }} >
+                        <Header style={{ background: '#525252', padding: 0 }} >
                             <Row >
                                 <Col span={12}>
                                     <h1 style={{ fontWeight: 'bold', color: '#0066c', fontFamily: 'Cochin', textAlign: 'right' }}>SCORECARD</h1>
                                 </Col>
-                                {/* <Col span={12}>
-                                    <Dropdown overlay={data} trigger={['click']}>
+                                <Col span={12} >
+                                    <Dropdown style={{ background: '#525252' }} overlay={data} trigger={['click']}>
                                         <h1 className="ant-dropdown-link" style={{ paddingRight: 40, fontWeight: 'bold', color: '#0066c', fontFamily: 'Cochin', textAlign: 'right' }}>
                                             <Icon className="custom-icon" type="setting" />
                                         </h1>
                                     </Dropdown>
 
-                                </Col> */}
+                                </Col>
 
                             </Row>
 

@@ -24,31 +24,33 @@
 }
 
 .rpy-input{
-  width: 100px;
+  width: 60px;
     text-align: center;
     font-weight: bold;
-      /* background-color:#313131; */
-      font-family: 'Josefin Sans', cursive ; 
-      border-color: #282c34;
+    /* background-color:#313131; */
+    font-family: 'Josefin Sans', cursive ; 
+    border-color: #282c34;
+    border-radius: 20px
     }
 .aar-input{
-      width: 100px;
+      width: 60px;
         text-align: center;
         font-weight: bold;
           /* background-color: #63CAEF; */
           align-items: center;
           font-family: 'Josefin Sans', cursive; 
-          border-color: #282c34;
+          border-color:#282c34;
+          border-radius: 20px
         }
 .ias-input{
-          width: 100px;
+          width: 60px;
           text-align: center;
           font-weight: bold;
           /* background-color: #F7CA65; */
           align-items: center;
           font-family: 'Josefin Sans', cursive; 
           border-color: #282c34;
-    
+          border-radius: 20px    
             }
 .App-link {
   color: #61dafb;
