@@ -4,7 +4,7 @@ import './cards.css';
 import './carousal.css';
 import { updateroi } from '../actions/updateroi';
 import { connect } from 'react-redux';
-
+import RoiTable from './roiTable';
 const { Meta } = Card;
 const FormItem = Form.Item;
 
@@ -111,7 +111,6 @@ class Cards extends Component {
         this.setState({
             [name]: e
         });
-        this.props.dispatch(updateroi(this.state.gtm, this.state.gfx, this.state.ghc1, this.state.ghc2, this.state.gql, this.state.coi))
     }
 
 
@@ -132,6 +131,11 @@ class Cards extends Component {
             case 'tdspr':
                 return this.tooltipDisplay('Time developers spend on problem resolution');
         }
+    }
+    onChange1 = () => {
+        console.log("hello")
+        this.props.dispatch(updateroi(this.state.gtm, this.state.gfx, this.state.ghc1, this.state.ghc2, this.state.gql, this.state.coi))
+
     }
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -418,6 +422,7 @@ class Cards extends Component {
                                                 min={1}
                                                 max={1000}
                                                 onChange={e => this.onChange(e, "coi")}
+                                                onAfterChange={e => this.onChange1(e)}
                                                 name="coi"
                                                 value={typeof coi === 'number' ? coi : 0}
                                                 step={0.01}
@@ -427,6 +432,7 @@ class Cards extends Component {
                                                 min={1}
                                                 max={1000}
                                                 onChange={e => this.onChange(e, "gtm")}
+                                                onAfterChange={e => this.onChange1(e)}
                                                 name='gtm'
                                                 value={typeof gtm === 'number' ? gtm : 0
                                                 }
@@ -437,6 +443,7 @@ class Cards extends Component {
                                                 min={1}
                                                 max={1000}
                                                 onChange={e => this.onChange(e, "gql")}
+                                                onAfterChange={e => this.onChange1(e)}
                                                 name='gql'
                                                 value={typeof gql === 'number' ? gql : 0}
                                                 step={0.01}
@@ -448,6 +455,7 @@ class Cards extends Component {
                                                 min={1}
                                                 max={1000}
                                                 onChange={e => this.onChange(e, "ghc1")}
+                                                onAfterChange={e => this.onChange1(e)}
                                                 name='ghc1'
                                                 value={typeof ghc1 === 'number' ? ghc1 : 0}
                                                 step={0.01}
@@ -458,6 +466,7 @@ class Cards extends Component {
                                                 min={1}
                                                 max={1000}
                                                 onChange={e => this.onChange(e, "ghc2")}
+                                                onAfterChange={e => this.onChange1(e)}
                                                 name='ghc2'
                                                 value={typeof ghc2 === 'number' ? ghc2 : 0}
                                                 step={0.01}
@@ -467,6 +476,7 @@ class Cards extends Component {
                                                 min={1}
                                                 max={1000}
                                                 onChange={e => this.onChange(e, "gfx")}
+                                                onAfterChange={e => this.onChange1(e)}
                                                 name='gfx'
                                                 value={typeof gfx === 'number' ? gfx : 0}
                                                 step={0.01}
@@ -499,7 +509,7 @@ class Cards extends Component {
                                 false
                             } >
 
-                            <h1 > state </h1>
+                            <h1 > {<RoiTable {...this.props} />} </h1>
                         </Card >
                     </Col>
                 </Row >
