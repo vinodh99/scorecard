@@ -4,23 +4,23 @@ self.__precacheManifest = [
     "url": "/scorecard/static/js/runtime~main.ec9fe40d.js"
   },
   {
-    "revision": "6caae86fcfcdba55a15a",
-    "url": "/scorecard/static/js/main.6caae86f.chunk.js"
+    "revision": "3cd5ec8b3c9fa531d1b5",
+    "url": "/scorecard/static/js/main.3cd5ec8b.chunk.js"
   },
   {
     "revision": "8dc58c367c8e0925c2c6",
     "url": "/scorecard/static/js/1.8dc58c36.chunk.js"
   },
   {
-    "revision": "6caae86fcfcdba55a15a",
-    "url": "/scorecard/static/css/main.d380491d.chunk.css"
+    "revision": "3cd5ec8b3c9fa531d1b5",
+    "url": "/scorecard/static/css/main.fcefafd7.chunk.css"
   },
   {
     "revision": "8dc58c367c8e0925c2c6",
     "url": "/scorecard/static/css/1.dd6f61be.chunk.css"
   },
   {
-    "revision": "fece15b7bc3102113c82d6bc0aa5f5e2",
+    "revision": "eb041ed4de741dcaa383821fbcea39e2",
     "url": "/scorecard/index.html"
   }
 ];

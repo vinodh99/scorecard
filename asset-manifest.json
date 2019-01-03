@@ -1,15 +1,15 @@
 {
-  "main.css": "/scorecard/static/css/main.d380491d.chunk.css",
-  "main.js": "/scorecard/static/js/main.6caae86f.chunk.js",
-  "main.js.map": "/scorecard/static/js/main.6caae86f.chunk.js.map",
+  "main.css": "/scorecard/static/css/main.fcefafd7.chunk.css",
+  "main.js": "/scorecard/static/js/main.3cd5ec8b.chunk.js",
+  "main.js.map": "/scorecard/static/js/main.3cd5ec8b.chunk.js.map",
   "static/css/1.dd6f61be.chunk.css": "/scorecard/static/css/1.dd6f61be.chunk.css",
   "static/js/1.8dc58c36.chunk.js": "/scorecard/static/js/1.8dc58c36.chunk.js",
   "static/js/1.8dc58c36.chunk.js.map": "/scorecard/static/js/1.8dc58c36.chunk.js.map",
   "runtime~main.js": "/scorecard/static/js/runtime~main.ec9fe40d.js",
   "runtime~main.js.map": "/scorecard/static/js/runtime~main.ec9fe40d.js.map",
-  "static/css/main.d380491d.chunk.css.map": "/scorecard/static/css/main.d380491d.chunk.css.map",
   "static/css/1.dd6f61be.chunk.css.map": "/scorecard/static/css/1.dd6f61be.chunk.css.map",
+  "static/css/main.fcefafd7.chunk.css.map": "/scorecard/static/css/main.fcefafd7.chunk.css.map",
   "index.html": "/scorecard/index.html",
-  "precache-manifest.3bee2f9f455c238251d9a1314a74bef2.js": "/scorecard/precache-manifest.3bee2f9f455c238251d9a1314a74bef2.js",
+  "precache-manifest.322051bd366739374298fdb16f0b2ac5.js": "/scorecard/precache-manifest.322051bd366739374298fdb16f0b2ac5.js",
   "service-worker.js": "/scorecard/service-worker.js"
 }
