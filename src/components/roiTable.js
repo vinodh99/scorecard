@@ -2,29 +2,24 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Table, Divider, Tag } from 'antd';
 
-
 class RoiTable extends Component {
-    constructor(props) {
-        super(props)
-    }
+    // constructor(props) {
+    //     super(props)
+    // }
     render() {
-        const dataSource = this.props.coi;
+        const dataSource = this.props.roiValues;
         console.log(dataSource)
         const columns = [{
             title: 'ROI',
-            dataIndex: 'ROI',
-            key: 'Roi',
+            dataIndex: 'name',
         }, {
-            title: 'time',
-            dataIndex: 'age',
-            key: 'age',
-        }, {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
+            title: 'Time',
+            dataIndex: 'time'
         }];
         return (
-            <Table dataSource={dataSource} columns={columns} />
+            <div>
+                <p><Table className='table' dataSource={dataSource} columns={columns} /></p>
+            </div>
         )
     }
 }

@@ -24,34 +24,42 @@
 }
 
 .rpy-input{
-  width: 60px;
+    width: 80px;
+    background: transparent;
     text-align: center;
     font-weight: bold;
-    /* background-color:#313131; */
     font-family: 'Josefin Sans', cursive ; 
-    border-color: #282c34;
-    border-radius: 20px
+    border-radius: 0px; 
+    /* border-color: #282c34; */
+    border: none;
+    border-bottom: 1px solid #000000;
     }
 .aar-input{
-      width: 60px;
-        text-align: center;
-        font-weight: bold;
-          /* background-color: #63CAEF; */
-          align-items: center;
-          font-family: 'Josefin Sans', cursive; 
-          border-color:#282c34;
-          border-radius: 20px
-        }
+    width: 80px;
+    background: transparent;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Josefin Sans', cursive ; 
+    border-radius: 0px; 
+    /* border-color: #282c34; */
+    border: none;
+    border-bottom: 1px solid #000000;
+      }
+
+  aar-input:hover {
+      background-color: none !important;
+    } 
 .ias-input{
-          width: 60px;
-          text-align: center;
-          font-weight: bold;
-          /* background-color: #F7CA65; */
-          align-items: center;
-          font-family: 'Josefin Sans', cursive; 
-          border-color: #282c34;
-          border-radius: 20px    
-            }
+    width: 80px;
+    background: transparent;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Josefin Sans', cursive ; 
+    border-radius: 0px; 
+    /* border-color: #282c34; */
+    border: none;
+    border-bottom: 1px solid #000000;   
+      }
 .App-link {
   color: #61dafb;
 }
@@ -66,6 +74,9 @@
 }
 .ant-row .row{
   background-color: #5C5A5F !important;
+}
+.ant-form-item-label {
+  font-family: 'Josefin Sans', cursive !important;
 
 }
 @keyframes App-logo-spin {
@@ -88,4 +99,12 @@
 .ant-dropdown-link ant-dropdown-trigger{
   background-color: #BCC0C2 !important;
 
+}
+.ant-table-content{
+  align-content: center !important;
+  width: 210px!important
+}
+h1, h2, h3, h5, p, div FormItem{
+  font-family: 'Josefin Sans', cursive !important;
+  font: 100 !important;
 }

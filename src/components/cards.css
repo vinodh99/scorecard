@@ -15,7 +15,7 @@ font-weight: bold
 
     }
  
-Input.placeholder{
+Input{
     text-align: 'center';
     
 }
@@ -25,6 +25,11 @@ Input.placeholder{
         height: 250; 
         border-radius: 50 
     } */
+.ant-spin-container {
+        position: absolute !important;
+        transition: opacity .3s;
+        zoom: 1;
+}
 
 
 

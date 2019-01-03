@@ -17,19 +17,19 @@ class Cards extends Component {
             min: 28.3,
             rie: 115 / 100,
             coi: 0,
-            rpy: 0,
-            fpy: 0.0,
+            rpy: '',
+            fpy: '',
             gtm: 0,
             gql: 0.0,
             ghc1: 0,
             ghc2: 0,
             gfx: 0,
-            rpm: 0,
-            ias: 0,
-            ish: 0,
-            das: 0,
+            rpm: '',
+            ias: '',
+            ish: '',
+            das: '',
             ds: 0.18,
-            aar: 0,
+            aar: '',
             roi: 0,
             por: 0.036,
             hpw: 0.16,
@@ -46,11 +46,11 @@ class Cards extends Component {
         this.setState({
             [e.target.name]: e.target.value
         });
-        this.GTM()
-        this.GQL()
-        this.GHC1()
-        this.GHC2()
-        this.GFX()
+        // this.GTM()
+        // this.GQL()
+        // this.GHC1()
+        // this.GHC2()
+        // this.GFX()
     }
 
 
@@ -108,6 +108,7 @@ class Cards extends Component {
 
     }
     onChange = (e, name) => {
+        console.log(e)
         this.setState({
             [name]: e
         });
@@ -130,18 +131,28 @@ class Cards extends Component {
                 return this.tooltipDisplay('Time spent on root cause analysis');
             case 'tdspr':
                 return this.tooltipDisplay('Time developers spend on problem resolution');
+            default:
+                return 'not defined';
         }
     }
     onChange1 = () => {
-        console.log("hello")
+        // console.log("hello")
         this.props.dispatch(updateroi(this.state.gtm, this.state.gfx, this.state.ghc1, this.state.ghc2, this.state.gql, this.state.coi))
 
     }
     render() {
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
+            labelCol: {
+                xs: { span: 24 },
+                sm: { span: 8 },
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 8 },
+            },
         };
-        const { rpy } = this.state;
+        // console.log(this.props)
         const { coi } = this.state;
         const { gtm } = this.state;
         const { gql } = this.state;
@@ -159,7 +170,7 @@ class Cards extends Component {
                             gutter={5}
                             style={{ paddingBottom: 5, paddingTop: 10, paddingLeft: 15 }} >
                             <Col span={12} >
-                                <Card className='card'
+                                <Card className="card"
                                     style={{ background: '#BCC0C2', textAlign: 'center', height: 237 }}
                                     bordered={false} >
                                     <p>
@@ -186,6 +197,8 @@ class Cards extends Component {
                                                     className="rpy-input"
                                                     value={this.state.rpy}
                                                     onChange={this.handleMessageInput}
+                                                    // defaultValue='0'
+                                                    onPressEnter={this.GTM}
                                                     placeholder="rpy"
                                                     size="small"
                                                 />
@@ -195,9 +208,30 @@ class Cards extends Component {
                                         <Col span={
                                             12
                                         } >
-                                            <p> Revenue Increase Estimate
-                        <Popover content={<a onClick={this.hide} > (It is set to 115 / 110 bydefault) </a>}
-                                                    title="Set the value of Revenue Increase Estimate"
+                                            <p> Revenue Increase Estimate &ensp;
+                                                <Popover
+                                                    alignContent="center"
+                                                    content={<p>(default value is set to {this.state.rie}, can be changed below)<br />
+                                                        <Form.Item
+                                                            // alignContent="center"
+                                                            {...formItemLayout}
+                                                            label="RIE"
+                                                        >
+                                                            {getFieldDecorator('number', {
+                                                                rules: [{
+                                                                    required: false,
+                                                                }],
+                                                            })(
+                                                                <Input
+                                                                    // className="rpy-input"
+                                                                    // width='10%'
+                                                                    textAlign='center'
+                                                                    name='rie'
+                                                                    value={this.state.rie}
+                                                                    onChange={this.onChange}
+                                                                />)}
+                                                        </Form.Item>
+                                                    </p>}
                                                     trigger="click"
                                                     visible={this.state.visible}
                                                     onVisibleChange={this.handleVisibleChange} >
@@ -206,7 +240,8 @@ class Cards extends Component {
                                         </Col> </Row > </Card>
                             </Col>
                             <Col span={12} >
-                                <Card style={{ background: /*'#33CCF4'*/ '#BCC0C2', textAlign: 'center', height: 237 }}
+                                <Card className="card"
+                                    style={{ background: /*'#33CCF4'*/ '#BCC0C2', textAlign: 'center', height: 237 }}
                                     bordered={false} >
                                     <p > Gain from flexibility in the IT environment <br /> (GFX) </p>
                                     <h1 > GFX: {this.state.gfx.toFixed(2)} </h1>
@@ -256,7 +291,7 @@ class Cards extends Component {
                                         Gains from enhanced IT team productivity and cost reduction of IT headcount waste(GHC) </p>
                                     <h4 >
                                         GHC(IT Ops): {
-                                            this.state.ghc1
+                                            this.state.ghc1.toFixed(2)
                                         }
                                     </h4>
                                     <Row gutter={
@@ -297,7 +332,7 @@ class Cards extends Component {
                                     </Row >
                                     <h4 >
                                         GHC(Developers): {
-                                            this.state.ghc2
+                                            this.state.ghc2.toFixed(2)
                                         } </h4> <Row gutter={10} >
                                         <Col span={8}
                                             style={{ alignItems: 'center' }} >
@@ -318,9 +353,7 @@ class Cards extends Component {
                                         <Col span={8} >
                                             <p > 60 % TRICD {
                                                 this.tooltip('tricd')
-                                            }
-                                                x75 % TSRCA {this.tooltip('tsrca')}
-                                                x40 % TDSPR {this.tooltip('tdspr')} <br /> < span style={{ fontWeight: 'bold' }} > {this.state.tpr} minutes </span></p >
+                                            } x 75 % TSRCA {this.tooltip('tsrca')} x 40 % TDSPR {this.tooltip('tdspr')} <br /> < span style={{ fontWeight: 'bold' }} > {this.state.tpr} minutes </span></p >
                                         </Col>
                                     </Row >
                                 </Card>
@@ -486,31 +519,33 @@ class Cards extends Component {
                                 </Card>
                             </Col >
                         </Row>
-                    </Col > <Col Span={4}
+                    </Col >
+                    <Col Span={4}
                         offset={20}
                         style={{
                             textAlign: 'center',
                             paddingBottom: 10,
                             paddingTop: 10,
                             paddingLeft: 5,
-                            paddingRight: 10
+                            // paddingRight: 10
                         }
                         } >
                         <Card hoverable style={
                             {
                                 background: 'grey',
                                 textAlign: 'center',
-                                height: 885,
-                                align: 'middle',
+                                alignContent: 'center',
+                                height: 880,
                                 borderRadius: '10px'
                             }
                         }
                             bordered={
                                 false
                             } >
-
-                            <h1 > {<RoiTable {...this.props} />} </h1>
+                            <p></p>
+                            <p>{<RoiTable {...this.props} />}</p>
                         </Card >
+                        {/* </div> */}
                     </Col>
                 </Row >
             </div >
@@ -519,10 +554,11 @@ class Cards extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log('hello ' + JSON.stringify(state))
+    // console.log('hello ' + JSON.stringify(state))
+    console.log(state)
     return {
         roi: state.updatedRoi.roi,
-        roiValues: state.calcValues
+        roiValues: state.updatedRoi.calcValues
     }
 }
 const wrappedCards = Form.create()(Cards)
