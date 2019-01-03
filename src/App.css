@@ -117,3 +117,8 @@ h1, h2, h3, h5, p, div FormItem{
   font-family: 'Josefin Sans', cursive !important;
   font: 100 !important;
 }
+.ant-table-content{
+  border-width: thick !important;
+  border-color: #000000 !important;
+  font-family: 'Josefin Sans', cursive !important; 
+}

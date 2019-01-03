@@ -35,60 +35,16 @@ class DashBoard extends Component {
         return (
             <div >
                 <Layout style={{ minHeight: '100vh' }}>
-                    {/* <Sider>
-                        <Menu defaultSelectedKeys={['1']} mode="inline">
-                            <img src="https://rsrit.com/wp-content/uploads/2017/12/logo_dark.png" alt="image" width="200px" height="70px"></img>
-
-                            <SubMenu
-                                key="sub1"
-                                title={<span style={{ textAlign: 'right' }}><Icon type="sliders" />GTM</span>}
-                            >
-                                <Menu.Item key="1"  >Revenue/Year: 20</Menu.Item>
-                                <Menu.Item key="2" >
-                                    <Row>
-                                        Revenue inc estimate
-                            </Row>
-                                    <Row>
-                                        20
-                            </Row>
-                                </Menu.Item>
-                            </SubMenu>
-                            <SubMenu
-                                key="sub2"
-                                title={<span style={{ textAlign: 'right' }}><Icon type="sliders" />GQL</span>}
-                            >
-                                <Menu.Item key="1"  >Failures/Year: 20</Menu.Item>
-                                <Menu.Item key="2" >Revenue/minute</Menu.Item>
-                            </SubMenu>
-                            <SubMenu
-                                key="sub3"
-                                title={<span style={{ textAlign: 'right' }}><Icon type="sliders" />GHC (IT Ops)</span>}
-                            >
-                                <Menu.Item key="1"  >IT Average Salary</Menu.Item>
-                                <Menu.Item key="2" >IT staff Headcount</Menu.Item>
-                            </SubMenu>
-                            <SubMenu
-                                key="sub4"
-                                title={<span style={{ textAlign: 'right' }}><Icon type="sliders" />GHC (Developers)</span>}
-                            >
-                                <Menu.Item key="1"  >Develper Avg salary</Menu.Item>
-                                <Menu.Item key="2" >Developer Staff</Menu.Item>
-                            </SubMenu>
-                            <SubMenu
-                                key="sub5"
-                                title={<span style={{ textAlign: 'right' }}><Icon type="sliders" />GFX</span>}
-                            >
-                                <Menu.Item key="1"  >App. Annual Revenue</Menu.Item>
-                            </SubMenu>
-                        </Menu>
-                    </Sider> */}
                     <Layout>
-                        <Header style={{ background: '#525252', padding: 0 }} >
-                            <Row >
-                                <Col span={12}>
-                                    <h1 style={{ fontWeight: 'bold', color: '#0066c', fontFamily: 'Cochin', textAlign: 'right' }}>SCORECARD</h1>
+                        <Header className="card" style={{ background: '#525252', padding: 0 }} >
+                            <Row style={{ alignContent: 'center' }}>
+                                <Col span={8} style={{ alignContent: 'center', paddingLeft: 20 }}>
+                                    <img src="https://rsrit.com/wp-content/uploads/2017/12/logo_dark.png" alt="reliable" width="150px" height="50px"></img>
                                 </Col>
-                                <Col span={12} >
+                                <Col span={8} style={{ fontWeight: 'bold', color: '#0066c', textAlign: 'left', paddingLeft: 65 }}>
+                                    <h1 style={{ fontWeight: 'bold', color: '#0066c' }}>SCORECARD</h1>
+                                </Col>
+                                <Col span={8} >
                                     <Dropdown style={{ background: '#525252' }} overlay={data} trigger={['click']}>
                                         <h1 className="ant-dropdown-link" style={{ paddingRight: 40, fontWeight: 'bold', color: '#0066c', fontFamily: 'Cochin', textAlign: 'right' }}>
                                             <Icon className="custom-icon" type="setting" />
@@ -96,9 +52,7 @@ class DashBoard extends Component {
                                     </Dropdown>
 
                                 </Col>
-
                             </Row>
-
                         </Header>
                         <Content style={{ alignItems: 'center', margin: '24px 16px', padding: 24, background: '#fff', minHeight: 580 }}>
                             <Cards {...this.props} />

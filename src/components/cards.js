@@ -14,13 +14,13 @@ class Cards extends Component {
         super(props)
         this.state = {
             visible: false,
-            min: 28.3,
-            rie: '110/115',
-            coi: 0,
+            min: '28.3',
+            rie: '1.04',
+            coi: '20',
             rpy: '',
             fpy: '',
             gtm: 0,
-            gql: 0.0,
+            gql: 0,
             ghc1: 0,
             ghc2: 0,
             gfx: 0,
@@ -28,12 +28,12 @@ class Cards extends Component {
             ias: '',
             ish: '',
             das: '',
-            ds: 0.18,
+            ds: '',
             aar: '',
             roi: 0,
-            por: 0.036,
-            hpw: 0.16,
-            tpr: 0.18,
+            por: '0.036',
+            hpw: '0.16',
+            tpr: '0.18',
 
         }
     }
@@ -46,67 +46,74 @@ class Cards extends Component {
         this.setState({
             [e.target.name]: e.target.value
         });
-        // this.GTM()
-        // this.GQL()
-        // this.GHC1()
-        // this.GHC2()
-        // this.GFX()
     }
 
+    calcutateROI = (name) => {
 
+        let coi = parseFloat(this.state.coi, 10);
+        if (this.state.gtm !== 0 && this.state.gql !== 0 && this.state.gfx !== 0 && this.state.ghc1 !== 0 && this.state.ghc2 !== 0 && coi)
+            this.props.dispatch(updateroi(this.state.gtm, this.state.gfx, this.state.ghc1, this.state.ghc2, this.state.gql, coi))
+
+    }
     GTM = () => {
-        let rpy = parseInt(this.state.rpy, 10);
-        let rie = parseInt(this.state.rie, 10);
-        if (rpy !== 0) {
+        let rpy = parseFloat(this.state.rpy, 10);
+        let rie = parseFloat(this.state.rie, 10);
+        if (rpy !== 0 && rie !== 0) {
             let gtm = rpy * rie;
             this.setState({
                 gtm: gtm
             })
-            this.props.dispatch(updateroi(this.state.gtm, this.state.gfx, this.state.ghc1, this.state.ghc2, this.state.gql, this.state.coi))
-            // return gtm;
+            this.calcutateROI();            // return gtm;
         }
-
     }
     GQL = () => {
-        if (this.state.fpy !== 0 && this.state.rpm !== 0) {
-            let gql = this.state.fpy * (28.3) * this.state.rpm;
+        let fpy = parseFloat(this.state.fpy, 10);
+        let rpm = parseFloat(this.state.rpm, 10);
+        let min = parseFloat(this.state.min, 10);
+        if (fpy !== 0 && rpm !== 0) {
+            let gql = fpy * min * rpm;
             this.setState({
                 gql: gql
             })
-            this.props.dispatch(updateroi(this.state.gtm, this.state.gfx, this.state.ghc1, this.state.ghc2, this.state.gql, this.state.coi))
+            this.calcutateROI();
         }
     }
     GHC1 = () => {
-        if (this.state.ias !== 0 && this.state.ish !== 0) {
-            let ghc1 = this.state.ias * this.state.ish * 0.16;
+        let ias = parseFloat(this.state.ias, 10);
+        let hpw = parseFloat(this.state.hpw, 10);
+        let ish = parseFloat(this.state.ish, 10);
+        if (ias !== 0 && ish !== 0) {
+            let ghc1 = ias * ish * hpw;
             this.setState({
-                ghc1: ghc1
+                ghc1
             })
-            this.props.dispatch(updateroi(this.state.gtm, this.state.gfx, this.state.ghc1, this.state.ghc2, this.state.gql, this.state.coi))
+            this.calcutateROI();
         }
 
     }
     GHC2 = () => {
-        if (this.state.das !== 0 && this.state.ds !== 0) {
-            let ghc2 = this.state.das * this.state.min * 0.18;
+        let das = parseFloat(this.state.das, 10);
+        let ds = parseFloat(this.state.ds, 10);
+        let tpr = parseFloat(this.state.tpr, 10);
+        if (das !== 0 && ds !== 0) {
+            let ghc2 = das * ds * tpr;
             this.setState({
-                ghc2: ghc2
+                ghc2
             })
-            // return ghc2
         }
-
+        this.calcutateROI();
     }
 
     GFX = () => {
-        if (this.state.aar !== 0) {
-
-            let gfx = this.state.aar * 0.036;
+        let aar = parseFloat(this.state.aar, 10);
+        let por = parseFloat(this.state.por, 10);
+        if (aar !== 0 && por !== 0) {
+            let gfx = aar * por;
             this.setState({
-                gfx: gfx
+                gfx
             })
-            this.props.dispatch(updateroi(this.state.gtm, this.state.gfx, this.state.ghc1, this.state.ghc2, this.state.gql, this.state.coi))
+            this.calcutateROI()
         }
-
     }
     onChange = (e, name) => {
         console.log(e)
@@ -138,8 +145,7 @@ class Cards extends Component {
     }
     onChange1 = () => {
         // console.log("hello")
-        this.props.dispatch(updateroi(this.state.gtm, this.state.gfx, this.state.ghc1, this.state.ghc2, this.state.gql, this.state.coi))
-
+        this.calcutateROI();
     }
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -166,8 +172,8 @@ class Cards extends Component {
                 <Row gutter={5} >
                     <Col span={20} >
                         <Row className="row"
-                            gutter={10}
-                            style={{ paddingBottom: 15, paddingTop: 15, paddingLeft: 15 }} >
+                            gutter={25}
+                            style={{ paddingBottom: 25, paddingTop: 15, paddingLeft: 15 }} >
                             <Col span={12} >
                                 <Card className="card"
                                     style={{ background: '#BCC0C2', textAlign: 'center', height: 237 }}
@@ -196,7 +202,6 @@ class Cards extends Component {
                                                     className="rpy-input"
                                                     value={this.state.rpy}
                                                     onChange={this.handleMessageInput}
-                                                    // defaultValue='0'
                                                     onPressEnter={this.GTM}
                                                     placeholder="rpy"
                                                     size="small"
@@ -256,6 +261,7 @@ class Cards extends Component {
                                                     className="aar-input"
                                                     value={this.state.aar}
                                                     onChange={this.handleMessageInput}
+                                                    onPressEnter={this.GFX}
                                                     placeholder="aar"
                                                     size="small"
                                                 />
@@ -268,8 +274,8 @@ class Cards extends Component {
                                 </Card>
                             </Col >
                         </Row>
-                        <Row className="row" gutter={10}
-                            style={{ paddingLeft: 15, paddingRight: 10, paddingBottom: 10 }} >
+                        <Row className="row" gutter={25}
+                            style={{ paddingLeft: 15, paddingRight: 10, paddingBottom: 25 }} >
                             <Col span={12} >
                                 <Card className="card" style={
                                     {
@@ -301,6 +307,7 @@ class Cards extends Component {
                                                     className="ias-input"
                                                     type="number"
                                                     value={this.state.ias}
+                                                    onPressEnter={this.GHC1}
                                                     onChange={this.handleMessageInput}
                                                     placeholder='ias'
                                                     size="small" />
@@ -315,6 +322,7 @@ class Cards extends Component {
                                                     name="ish"
                                                     type="number"
                                                     value={this.state.ish}
+                                                    onPressEnter={this.GHC1}
                                                     onChange={this.handleMessageInput}
                                                     placeholder='ish'
                                                     size="small"
@@ -334,6 +342,7 @@ class Cards extends Component {
                                                     name="das"
                                                     type="number"
                                                     value={this.state.das}
+                                                    onPressEnter={this.GHC2}
                                                     onChange={this.handleMessageInput}
                                                     placeholder="das"
                                                     className="aar-input"
@@ -341,7 +350,17 @@ class Cards extends Component {
                                             </p>
                                         </Col>
                                         <Col span={8} >
-                                            <p > Average Minutes to recover difference < br /> < span style={{ fontWeight: 'bold' }} > {this.state.min} minutes </span></p >
+                                            <p > Dev staff<br />
+                                                <Input
+                                                    name="ds"
+                                                    type="number"
+                                                    value={this.state.ds}
+                                                    onPressEnter={this.GHC2}
+                                                    onChange={this.handleMessageInput}
+                                                    placeholder="ds"
+                                                    className="aar-input"
+                                                    size="small" />
+                                            </p>
                                         </Col>
                                         <Col span={8} >
                                             <p > 60 % TRICD {
@@ -377,33 +396,25 @@ class Cards extends Component {
                                                     name="fpy"
                                                     type="number"
                                                     value={this.state.fpy}
+                                                    onPressEnter={this.GQL}
                                                     onChange={this.handleMessageInput}
                                                     size="small"
                                                     placeholder='fpy' />
                                             </p>
                                         </Col>
                                         <Col span={8} >
-                                            <p > Average Minutes to recover difference <br /> < span style={
-                                                {
-                                                    fontWeight: 'bold'
-                                                }
-                                            } > {
-                                                    this.state.min
-                                                }
+                                            <p > Average Minutes to recover difference <br /> < span style={{ fontWeight: 'bold' }} > {this.state.min}
                                                 minutes </span></p >
                                         </Col>
                                         <Col span={8}
-                                            style={
-                                                {
-                                                    textAlign: 'center'
-                                                }
-                                            } >
+                                            style={{ textAlign: 'center' }} >
                                             <p > Revenue per minute <br /> { /* <Col span={10} offset={7} style={{ textAlign: 'center' }}> */} { /* <Row> */}
                                                 <Input
                                                     className='aar-input'
                                                     name="rpm"
                                                     type="number"
                                                     value={this.state.rpm}
+                                                    onPressEnter={this.GQL}
                                                     onChange={this.handleMessageInput}
                                                     size="small"
                                                     placeholder='rpm' />
@@ -517,7 +528,7 @@ class Cards extends Component {
                         style={{
                             textAlign: 'center',
                             paddingBottom: 10,
-                            paddingTop: 10,
+                            paddingTop: 15,
                             paddingLeft: 5,
                             // paddingRight: 10
                         }
@@ -527,7 +538,7 @@ class Cards extends Component {
                                 background: 'grey',
                                 textAlign: 'center',
                                 alignContent: 'center',
-                                height: 895,
+                                height: 915,
                                 borderRadius: '10px'
                             }
                         }
