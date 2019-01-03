@@ -15,7 +15,7 @@ class Cards extends Component {
         this.state = {
             visible: false,
             min: 28.3,
-            rie: 115 / 100,
+            rie: '110/115',
             coi: 0,
             rpy: '',
             fpy: '',
@@ -55,9 +55,10 @@ class Cards extends Component {
 
 
     GTM = () => {
-        // let gtm=parse
-        if (this.state.rpy !== 0) {
-            let gtm = this.state.rpy * (115 / 110);
+        let rpy = parseInt(this.state.rpy, 10);
+        let rie = parseInt(this.state.rie, 10);
+        if (rpy !== 0) {
+            let gtm = rpy * rie;
             this.setState({
                 gtm: gtm
             })
@@ -163,12 +164,10 @@ class Cards extends Component {
         return (
             <div style={{ background: '#ECECEC', height: 750 }} >
                 <Row gutter={5} >
-                    <Col span={
-                        20
-                    } >
+                    <Col span={20} >
                         <Row className="row"
-                            gutter={5}
-                            style={{ paddingBottom: 5, paddingTop: 10, paddingLeft: 15 }} >
+                            gutter={10}
+                            style={{ paddingBottom: 15, paddingTop: 15, paddingLeft: 15 }} >
                             <Col span={12} >
                                 <Card className="card"
                                     style={{ background: '#BCC0C2', textAlign: 'center', height: 237 }}
@@ -208,7 +207,7 @@ class Cards extends Component {
                                         <Col span={
                                             12
                                         } >
-                                            <p> Revenue Increase Estimate &ensp;
+                                            <p> Revenue Increase Estimate
                                                 <Popover
                                                     alignContent="center"
                                                     content={<p>(default value is set to {this.state.rie}, can be changed below)<br />
@@ -223,12 +222,14 @@ class Cards extends Component {
                                                                 }],
                                                             })(
                                                                 <Input
-                                                                    // className="rpy-input"
-                                                                    // width='10%'
+                                                                    className="rpy-input"
+                                                                    // height
                                                                     textAlign='center'
                                                                     name='rie'
+                                                                    onChange={this.handleMessageInput}
                                                                     value={this.state.rie}
-                                                                    onChange={this.onChange}
+                                                                    defaultValue='110/115'
+                                                                    onPressEnter={this.GTM}
                                                                 />)}
                                                         </Form.Item>
                                                     </p>}
@@ -267,17 +268,10 @@ class Cards extends Component {
                                 </Card>
                             </Col >
                         </Row>
-                        <Row className="row"
-                            gutter={
-                                5
-                            }
-                            style={
-                                {
-                                    paddingLeft: 15
-                                }
-                            } >
+                        <Row className="row" gutter={10}
+                            style={{ paddingLeft: 15, paddingRight: 10, paddingBottom: 10 }} >
                             <Col span={12} >
-                                <Card style={
+                                <Card className="card" style={
                                     {
                                         background: '#BCC0C2' /*'#FECA4F'*/,
                                         textAlign: 'center',
@@ -294,9 +288,7 @@ class Cards extends Component {
                                             this.state.ghc1.toFixed(2)
                                         }
                                     </h4>
-                                    <Row gutter={
-                                        10
-                                    } >
+                                    <Row gutter={10} >
                                         <Col span={8}
                                             style={
                                                 {
@@ -333,7 +325,8 @@ class Cards extends Component {
                                     <h4 >
                                         GHC(Developers): {
                                             this.state.ghc2.toFixed(2)
-                                        } </h4> <Row gutter={10} >
+                                        } </h4>
+                                    <Row gutter={10} >
                                         <Col span={8}
                                             style={{ alignItems: 'center' }} >
                                             <p > Developer average salary <br />
@@ -359,7 +352,7 @@ class Cards extends Component {
                                 </Card>
                             </Col >
                             <Col span={12} >
-                                <Card style={{
+                                <Card className="card" style={{
                                     background: /*'#35D385'*/ '#BCC0C2',
                                     textAlign: 'center',
                                     height: 320
@@ -428,14 +421,13 @@ class Cards extends Component {
                                 }
                             } >
                             <Col >
-                                <Card className="card22"
+                                <Card className="card"
                                     style={{
                                         background: '#535353a',
                                         textAlign: 'center',
-                                        height: 180,
+                                        height: 300,
                                         justifyContent: 'center',
                                         borderRadius: 10,
-                                        height: '300'
                                     }
                                     }
                                     bordered={
@@ -530,12 +522,12 @@ class Cards extends Component {
                             // paddingRight: 10
                         }
                         } >
-                        <Card hoverable style={
+                        <Card className="card" hoverable style={
                             {
                                 background: 'grey',
                                 textAlign: 'center',
                                 alignContent: 'center',
-                                height: 880,
+                                height: 895,
                                 borderRadius: '10px'
                             }
                         }

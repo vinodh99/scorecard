@@ -23,6 +23,12 @@
   font-size: 35px !important;
 }
 
+.card{
+  /* padding-right: 10px !important; */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  /* border-radius: 10px; */
+  align-content: center !important
+}
 .rpy-input{
     width: 80px;
     background: transparent;
@@ -46,8 +52,9 @@
     border-bottom: 1px solid #000000;
       }
 
-  aar-input:hover {
-      background-color: none !important;
+.ant-input:focus {
+      /* background-color: none !important; */
+      box-shadow: 0 2px 0 0px rgba(24, 144, 255, 0.2) !important;
     } 
 .ias-input{
     width: 80px;
@@ -74,6 +81,8 @@
 }
 .ant-row .row{
   background-color: #5C5A5F !important;
+  padding-right: 10px;
+  /* padding-bottom: 10px; */
 }
 .ant-form-item-label {
   font-family: 'Josefin Sans', cursive !important;
