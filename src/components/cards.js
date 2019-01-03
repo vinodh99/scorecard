@@ -70,7 +70,7 @@ class Cards extends Component {
         let fpy = parseFloat(this.state.fpy, 10);
         let rpm = parseFloat(this.state.rpm, 10);
         let min = parseFloat(this.state.min, 10);
-        if (fpy !== 0 && rpm !== 0) {
+        if (fpy !== 0 && rpm !== 0 && !isNaN(fpy) && !isNaN(rpm)) {
             let gql = fpy * min * rpm;
             this.setState({
                 gql: gql
@@ -82,7 +82,7 @@ class Cards extends Component {
         let ias = parseFloat(this.state.ias, 10);
         let hpw = parseFloat(this.state.hpw, 10);
         let ish = parseFloat(this.state.ish, 10);
-        if (ias !== 0 && ish !== 0) {
+        if (ias !== 0 && !isNaN(ias) && ish !== 0 && !isNaN(ish)) {
             let ghc1 = ias * ish * hpw;
             this.setState({
                 ghc1
@@ -95,7 +95,7 @@ class Cards extends Component {
         let das = parseFloat(this.state.das, 10);
         let ds = parseFloat(this.state.ds, 10);
         let tpr = parseFloat(this.state.tpr, 10);
-        if (das !== 0 && ds !== 0) {
+        if (das !== 0 && !isNaN(das) && ds !== 0 && !isNaN(ds)) {
             let ghc2 = das * ds * tpr;
             this.setState({
                 ghc2
