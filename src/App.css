@@ -24,9 +24,7 @@
 }
 
 .card{
-  /* padding-right: 10px !important; */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
-  /* border-radius: 10px; */
   align-content: center !important
 }
 .rpy-input{
@@ -110,8 +108,11 @@
 
 }
 .ant-table-content{
-  align-content: center !important;
-  width: 210px!important
+  /* align-content: center !important;
+  width: 250px!important */
+  width: 210px;
+  /* height: 15vw; */
+  object-fit: cover;
 }
 h1, h2, h3, h5, p, div FormItem{
   font-family: 'Josefin Sans', cursive !important;
@@ -121,4 +122,13 @@ h1, h2, h3, h5, p, div FormItem{
   border-width: thick !important;
   border-color: #000000 !important;
   font-family: 'Josefin Sans', cursive !important; 
+}
+.ant-table-thead th, tr{
+  background-color: grey !important;
+  text-align: center !important;
+  border-bottom: grey !important
+}
+.table{
+
+/* width:  !important; */
 }

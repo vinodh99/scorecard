@@ -18,7 +18,7 @@ class RoiTable extends Component {
         }];
         return (
             <div>
-                <p><Table className='table' dataSource={dataSource} columns={columns} /></p>
+                <p><Table dataSource={dataSource} columns={columns} /></p>
             </div>
         )
     }

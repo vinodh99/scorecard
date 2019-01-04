@@ -43,12 +43,46 @@ class Cards extends Component {
         });
     }
     handleMessageInput = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
+        // e.persist();
+        // this.setState({
+        //     [e.target.name]: e.target.value
+        // });
+        const t = e.target;
+        console.log(e)
+        this.setState({ [e.target.name]: e.target.value }, () => {
+
+            console.log(e)
+            switch (t.name) {
+                case 'rpy':
+                case 'rie':
+                    this.GTM();
+                    break;
+                case 'aar':
+                case 'por':
+                    this.GFX();
+                    break;
+                case 'ias':
+                case 'hpw':
+                case 'ish':
+                    this.GHC1();
+                    break;
+                case 'das':
+                case 'ds':
+                case 'tpr':
+                    this.GHC2();
+                    break;
+                case 'fpy':
+                case 'rpm':
+                case 'min':
+                    this.GQL();
+                    break;
+                default:
+                    this.calcutateROI();
+            }
         });
     }
 
-    calcutateROI = (name) => {
+    calcutateROI = () => {
 
         let coi = parseFloat(this.state.coi, 10);
         if (this.state.gtm !== 0 && this.state.gql !== 0 && this.state.gfx !== 0 && this.state.ghc1 !== 0 && this.state.ghc2 !== 0 && coi)
@@ -56,9 +90,9 @@ class Cards extends Component {
 
     }
     GTM = () => {
-        let rpy = parseFloat(this.state.rpy, 10);
         let rie = parseFloat(this.state.rie, 10);
-        if (rpy !== 0 && rie !== 0) {
+        let rpy = parseFloat(this.state.rpy, 10);
+        if (rpy !== 0 && !isNaN(rpy) && rie !== 0) {
             let gtm = rpy * rie;
             this.setState({
                 gtm: gtm
@@ -70,7 +104,7 @@ class Cards extends Component {
         let fpy = parseFloat(this.state.fpy, 10);
         let rpm = parseFloat(this.state.rpm, 10);
         let min = parseFloat(this.state.min, 10);
-        if (fpy !== 0 && rpm !== 0 && !isNaN(fpy) && !isNaN(rpm)) {
+        if (fpy !== 0 && !isNaN(fpy) && rpm !== 0 && !isNaN(fpy) && !isNaN(rpm)) {
             let gql = fpy * min * rpm;
             this.setState({
                 gql: gql
@@ -107,7 +141,7 @@ class Cards extends Component {
     GFX = () => {
         let aar = parseFloat(this.state.aar, 10);
         let por = parseFloat(this.state.por, 10);
-        if (aar !== 0 && por !== 0) {
+        if (aar !== 0 && !isNaN(aar) && por !== 0) {
             let gfx = aar * por;
             this.setState({
                 gfx
@@ -144,7 +178,6 @@ class Cards extends Component {
         }
     }
     onChange1 = () => {
-        // console.log("hello")
         this.calcutateROI();
     }
     render() {
@@ -202,7 +235,7 @@ class Cards extends Component {
                                                     className="rpy-input"
                                                     value={this.state.rpy}
                                                     onChange={this.handleMessageInput}
-                                                    onPressEnter={this.GTM}
+                                                    // onPressEnter={this.GTM}
                                                     placeholder="rpy"
                                                     size="small"
                                                 />
@@ -227,14 +260,14 @@ class Cards extends Component {
                                                                 }],
                                                             })(
                                                                 <Input
+                                                                    type="number"
                                                                     className="rpy-input"
                                                                     // height
                                                                     textAlign='center'
                                                                     name='rie'
                                                                     onChange={this.handleMessageInput}
                                                                     value={this.state.rie}
-                                                                    defaultValue='110/115'
-                                                                    onPressEnter={this.GTM}
+                                                                // onPressEnter={this.GTM}
                                                                 />)}
                                                         </Form.Item>
                                                     </p>}
@@ -408,7 +441,7 @@ class Cards extends Component {
                                         </Col>
                                         <Col span={8}
                                             style={{ textAlign: 'center' }} >
-                                            <p > Revenue per minute <br /> { /* <Col span={10} offset={7} style={{ textAlign: 'center' }}> */} { /* <Row> */}
+                                            <p > Revenue per minute <br />
                                                 <Input
                                                     className='aar-input'
                                                     name="rpm"
@@ -533,21 +566,21 @@ class Cards extends Component {
                             // paddingRight: 10
                         }
                         } >
-                        <Card className="card" hoverable style={
-                            {
-                                background: 'grey',
-                                textAlign: 'center',
-                                alignContent: 'center',
-                                height: 915,
-                                borderRadius: '10px'
+                        <div>
+                            <Card className="card" hoverable style={
+                                {
+                                    background: 'grey',
+                                    textAlign: 'center',
+                                    alignContent: 'center',
+                                    height: 915,
+                                    borderRadius: '10px'
+                                }
                             }
-                        }
-                            bordered={
-                                false
-                            } >
-                            <p></p>
-                            <p>{<RoiTable {...this.props} />}</p>
-                        </Card >
+                                bordered={false} >
+                                <h1>Calculated ROI values</h1>
+                                <div className='table'>{<RoiTable {...this.props} />}</div>
+                            </Card >
+                        </div>
                         {/* </div> */}
                     </Col>
                 </Row >
